@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="uz" class="light">
+<html lang="uz" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Xarajatlar Nazorati | Shaxsiy Moliya</title>
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Maxsus CSS Fayli -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -25,331 +28,850 @@
         extend: {
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            fintech: {
+              bg: '#090717',
+              surface: '#15102b',
+              surfaceCard: '#1a1435',
+              surfaceBorder: 'rgba(168, 85, 247, 0.18)',
+              purple: '#9333ea',
+              purpleLight: '#c084fc',
+              accent: '#8b5cf6',
+            }
           }
         }
       }
     }
   </script>
 </head>
-<body class="text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300 font-sans antialiased pb-24 sm:pb-8 selection:bg-indigo-500 selection:text-white relative">
+<body class="bg-[#06040f] text-slate-100 min-h-screen font-sans antialiased selection:bg-purple-600 selection:text-white transition-colors duration-300">
 
   <!-- ========================================================
-       ORQA FON (KO'P DOLLAR KUPYURALARI VA PULLAR - ULTRA VIVID)
+       ORQA FON EFFEKTI (FINTECH BINAFI NURLAR & DEEP GRADIENT)
        ======================================================== -->
-  <div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-    <!-- 100 Dollarlik yoyilgan kupyuralar va pullar qatlami -->
-    <img src="https://images.unsplash.com/photo-1565372195458-9de0b320ef04?q=80&w=2400&auto=format&fit=crop" 
-         alt="Ko'p dollar pullari foni" 
-         class="w-full h-full object-cover object-center scale-100 opacity-70 dark:opacity-45 filter contrast-125 saturate-125 transition-all duration-500">
-    
-    <!-- Zamonaviy shaffof gradient qoplama -->
-    <div class="absolute inset-0 bg-gradient-to-b from-slate-900/35 via-slate-900/50 to-slate-950/75 dark:from-slate-950/60 dark:via-slate-950/75 dark:to-slate-950/90 transition-colors"></div>
-    
-    <!-- Moliyaviy zumrad va binafsha nur effektlari -->
-    <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-tr from-emerald-500/25 via-teal-500/20 to-indigo-600/25 blur-3xl rounded-full"></div>
+  <div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden bg-[#070513] dark:bg-[#070513] transition-colors">
+    <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-[460px] bg-gradient-to-b from-purple-700/35 via-violet-900/20 to-transparent blur-[110px] rounded-full animate-glow"></div>
+    <div class="absolute top-1/3 -right-20 w-[350px] h-[350px] bg-indigo-600/15 blur-[100px] rounded-full"></div>
+    <div class="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-purple-900/20 blur-[120px] rounded-full"></div>
   </div>
 
   <!-- ========================================================
-       1. IXCHAM MOBIL NAVBAR (STICKY GLASSMORPHISM)
+       MOBIL ILOVA RAMKASI (MOBILE CONTAINER)
+       Mobilda 100% qulay to'liq ekran, Kompyuterda smartfon ko'rinishida
        ======================================================== -->
-  <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+  <div class="w-full max-w-md mx-auto min-h-screen flex flex-col relative pb-28 sm:pb-24 sm:border-x sm:border-purple-900/25 shadow-2xl bg-[#090717]/95 dark:bg-[#090717]/95 text-slate-100">
+
+    <!-- ========================================================
+         STICKY HEADER & MONTH BAR WRAPPER (YAGONA STICKY BLOK)
+         Sakramaslik va mukammal barqarorlik ta'minlandi
+         ======================================================== -->
+    <div class="sticky top-0 z-30 bg-[#090717]/95 dark:bg-[#090717]/95 backdrop-blur-xl border-b border-purple-500/15">
       
-      <!-- Brand & Status -->
-      <div class="flex items-center gap-2.5">
-        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-md shadow-indigo-500/25">
-          <i class="fa-solid fa-wallet text-sm"></i>
-        </div>
-        <div>
-          <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-            Xarajatlarim
-          </h1>
-          <span class="text-[10px] text-slate-400 font-medium">Shaxsiy hamyon</span>
-        </div>
-      </div>
+      <!-- Foydalanuvchi ma'lumoti va o'ng tugmalar -->
+      <header id="appHeader" class="px-4 pt-2.5 pb-2 flex items-center justify-between">
+        <div class="flex items-center gap-2.5 cursor-pointer group" onclick="switchTab('profile')">
+          <div class="relative">
+            <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-pink-500 p-0.5 shadow-md shadow-purple-600/30 group-active:scale-95 transition">
+              <div class="w-full h-full bg-[#181136] rounded-[14px] flex items-center justify-center overflow-hidden">
+                <i class="fa-solid fa-user-astronaut text-purple-300 text-xs"></i>
+              </div>
+            </div>
+            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#090717] rounded-full"></span>
+          </div>
 
-      <!-- O'ng tomondagi tugmalar -->
-      <div class="flex items-center gap-1.5 sm:gap-2">
-        <!-- Rejim almashtirish -->
-        <button id="themeToggleBtn" onclick="toggleTheme()" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white/90 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center transition active:scale-90 border border-slate-200/70 dark:border-slate-700/70 shadow-xs" title="Tungi / Kunduzgi rejim">
-          <i id="themeIcon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] font-semibold text-purple-300/80 leading-none">Moliya nazorati</span>
+              <span class="text-[8px] font-black uppercase px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 border border-purple-400/20">Mini App</span>
+            </div>
+            <h1 id="headerUserName" class="text-xs sm:text-sm font-extrabold tracking-tight text-white leading-tight mt-0.5">
+              Atxambek
+            </h1>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1.5">
+          <button onclick="goToSearch()" class="touch-btn w-8 h-8 rounded-xl bg-[#1a1435] text-purple-200 hover:text-white hover:bg-purple-900/40 flex items-center justify-center transition border border-purple-500/20" title="Qidiruv">
+            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+          </button>
+
+          <button id="themeToggleBtn" onclick="toggleTheme()" class="touch-btn w-8 h-8 rounded-xl bg-[#1a1435] text-purple-200 hover:text-white hover:bg-purple-900/40 flex items-center justify-center transition border border-purple-500/20" title="Rejim">
+            <i id="themeIcon" class="fa-solid fa-moon text-xs"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Oylarni boshqarish navigatori (Ultra-ixcham va qulay kapsula) -->
+      <div id="monthNavigatorBar" class="px-4 pb-2.5 pt-0 flex items-center justify-between gap-1.5">
+        <button onclick="changeMonth(-1)" class="touch-btn w-8 h-8 rounded-xl bg-[#161033] hover:bg-purple-900/40 text-purple-300 hover:text-white flex items-center justify-center transition border border-purple-500/20 active:scale-90" title="Oldingi oy">
+          <i class="fa-solid fa-chevron-left text-xs"></i>
         </button>
 
-        <!-- Tozalash -->
-        <button onclick="confirmResetData()" class="h-8 sm:h-9 px-2.5 sm:px-3 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition flex items-center gap-1 active:scale-95" title="Barcha xarajatlarni tozalash">
-          <i class="fa-solid fa-trash-can text-xs"></i>
-          <span class="hidden sm:inline">Tozalash</span>
+        <button onclick="openMonthPickerModal()" class="touch-btn flex-1 flex items-center justify-center gap-2 px-3 py-1.5 rounded-xl bg-[#181138] hover:bg-purple-900/35 border border-purple-500/25 text-white active:scale-95 transition shadow-sm max-w-[240px]">
+          <i class="fa-regular fa-calendar-days text-purple-400 text-xs"></i>
+          <span id="currentMonthYearLabel" class="text-xs sm:text-sm font-extrabold tracking-wide truncate">Sentyabr 2026</span>
+          <i class="fa-solid fa-chevron-down text-[10px] text-purple-400/80"></i>
         </button>
+
+        <div class="flex items-center gap-1.5">
+          <button id="todayJumpBtn" onclick="jumpToCurrentMonth()" class="hidden touch-btn px-2 py-1 rounded-xl bg-purple-600/30 text-purple-200 text-[10px] font-black border border-purple-400/30 hover:bg-purple-600 hover:text-white transition active:scale-95 whitespace-nowrap">
+            Joriy oy
+          </button>
+          <button onclick="changeMonth(1)" class="touch-btn w-8 h-8 rounded-xl bg-[#161033] hover:bg-purple-900/40 text-purple-300 hover:text-white flex items-center justify-center transition border border-purple-500/20 active:scale-90" title="Keyingi oy">
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+          </button>
+        </div>
       </div>
 
     </div>
-  </header>
 
-  <!-- ========================================================
-       2. ASOSIY QISM (MOBILE FIRST CONTAINER)
-       ======================================================== -->
-  <main class="max-w-5xl mx-auto px-3 sm:px-6 pt-3 sm:pt-6 space-y-3.5 sm:space-y-6">
+    <!-- ========================================================
+         ASOSIY SAHIFALAR / TABLAR
+         ======================================================== -->
+    <main class="flex-1 px-4 pt-3 space-y-3.5 min-h-[85vh]">
 
-    <!-- A. JAMI BALANS / HERO KARTA (MODERN FINTECH LUXURY DIZAYN) -->
-    <section class="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-slate-950/90 via-indigo-950/90 to-emerald-950/90 text-white p-4 sm:p-7 shadow-2xl shadow-indigo-950/40 border border-emerald-500/30 backdrop-blur-xl">
-      
-      <!-- Orqa fon nurlari -->
-      <div class="absolute -right-12 -top-12 w-48 h-48 bg-emerald-500/30 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -left-12 -bottom-12 w-48 h-48 bg-indigo-500/30 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div class="relative z-10 space-y-3">
+      <!-- ========================================================
+           TAB 1: ASOSIY (HOME SAHIFA)
+           ======================================================== -->
+      <section id="tab-home" class="tab-content active space-y-3.5">
         
-        <!-- Yuqori qator: Sarlavha va Qo'shish CTA -->
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-[10px] sm:text-xs font-bold text-emerald-300 backdrop-blur-md">
-              <i class="fa-solid fa-dollar-sign text-emerald-400 text-xs"></i>
-              Jami Sarflangan Mablag'
-            </span>
-          </div>
+        <!-- FINTECH HERO BALANS KARTASI (TELEGRAM WALLET STYLE) -->
+        <div class="purple-hero-card rounded-[28px] p-4 sm:p-5 relative overflow-hidden text-white space-y-3.5">
           
-          <!-- Tezkor qo'shish tugmasi (Hero ichida) -->
-          <button onclick="openExpenseModal()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 active:scale-95 text-slate-950 font-extrabold text-xs shadow-lg shadow-emerald-500/25 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-plus text-[10px]"></i>
-            <span>Qo'shish</span>
-          </button>
+          <!-- Orqa fon nurlari -->
+          <div class="absolute -right-8 -top-8 w-44 h-44 bg-purple-500/25 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -left-8 -bottom-8 w-44 h-44 bg-indigo-500/25 rounded-full blur-3xl pointer-events-none"></div>
+
+          <!-- Karta yuqori qatori: Hamyon turi va Balans Statusi -->
+          <div class="flex items-center justify-between relative z-10">
+            <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-[11px] font-bold text-purple-200 tracking-wide">UZS Hamyon &bull; Asosiy</span>
+            </div>
+            
+            <span id="heroBalanceStatus" class="text-[10px] font-black text-emerald-400 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-400/25">Ijobiy</span>
+          </div>
+
+          <!-- Asosiy Balans (Sof Qoldiq = Jami Kirim - Jami Chiqim) -->
+          <div class="relative z-10 text-center py-1">
+            <span class="text-[11px] font-bold text-purple-300/80 uppercase tracking-wider block">Hamyon Qoldig'i (Sof Balans)</span>
+            <h2 id="totalBalanceHero" class="text-3xl sm:text-4xl font-black tracking-tight text-white leading-tight mt-0.5 drop-shadow-md">
+              0 so'm
+            </h2>
+          </div>
+
+          <!-- 2 Ustunli Kassaviy Oqim Ko'rsatkichi (Jami Kirim vs Jami Chiqim) -->
+          <div class="relative z-10 grid grid-cols-2 gap-2">
+            <div class="p-2.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-sm flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 text-xs">
+                <i class="fa-solid fa-arrow-down-left"></i>
+              </div>
+              <div class="min-w-0">
+                <span class="text-[10px] font-bold text-emerald-300 block leading-tight">Jami Kirim</span>
+                <div id="heroIncomeTotal" class="text-xs sm:text-sm font-black text-emerald-300 truncate mt-0.5">
+                  0 so'm
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 backdrop-blur-sm flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 text-xs">
+                <i class="fa-solid fa-arrow-up-right"></i>
+              </div>
+              <div class="min-w-0">
+                <span class="text-[10px] font-bold text-rose-300 block leading-tight">Jami Chiqim</span>
+                <div id="heroExpenseTotal" class="text-xs sm:text-sm font-black text-rose-300 truncate mt-0.5">
+                  0 so'm
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TELEGRAM WALLET USLUBIDAGI 3 TA HARAKAT TUGMASI (KIRIM, CHIQIM, BUDJET) -->
+          <div class="grid grid-cols-3 gap-2 relative z-10 pt-1">
+            
+            <!-- + Kirim -->
+            <button onclick="openExpenseModal('income')" class="touch-btn group flex flex-col items-center justify-center gap-1.5 p-2 rounded-2xl bg-white/5 hover:bg-white/10 active:scale-95 border border-white/10 transition">
+              <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-lg shadow-emerald-600/30 group-hover:scale-105 transition">
+                <i class="fa-solid fa-plus text-base"></i>
+              </div>
+              <span class="text-xs font-bold text-white tracking-wide">Kirim</span>
+            </button>
+
+            <!-- - Chiqim -->
+            <button onclick="openExpenseModal('expense')" class="touch-btn group flex flex-col items-center justify-center gap-1.5 p-2 rounded-2xl bg-white/5 hover:bg-white/10 active:scale-95 border border-white/10 transition">
+              <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-rose-600 to-pink-600 text-white flex items-center justify-center shadow-lg shadow-rose-600/30 group-hover:scale-105 transition">
+                <i class="fa-solid fa-minus text-base"></i>
+              </div>
+              <span class="text-xs font-bold text-white tracking-wide">Chiqim</span>
+            </button>
+
+            <!-- 🎯 Budjet -->
+            <button onclick="openBudgetModal()" class="touch-btn group flex flex-col items-center justify-center gap-1.5 p-2 rounded-2xl bg-white/5 hover:bg-white/10 active:scale-95 border border-white/10 transition">
+              <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-purple-600/30 group-hover:scale-105 transition">
+                <i class="fa-solid fa-bullseye text-base"></i>
+              </div>
+              <span class="text-xs font-bold text-white tracking-wide">Budjet</span>
+            </button>
+
+          </div>
+
+          <!-- Oylik Budjet Sarflanish Indikatori (Minimalist Glass Bar) -->
+          <div class="relative z-10 pt-1 cursor-pointer group" onclick="openBudgetModal()" title="Budjetni ko'rish yoki o'zgartirish">
+            <div class="p-2.5 rounded-2xl bg-black/25 border border-white/10 space-y-1.5 group-hover:border-purple-400/40 transition">
+              <div class="flex items-center justify-between text-[11px] font-bold">
+                <span class="text-purple-200 flex items-center gap-1.5">
+                  <i class="fa-solid fa-bullseye text-purple-400 text-xs"></i>
+                  <span>Oylik Reja: <strong id="heroBudgetLimitText" class="text-white">10,000,000 so'm</strong></span>
+                </span>
+                <span id="heroBudgetPercent" class="text-purple-300 font-extrabold">0% ishlatildi</span>
+              </div>
+              <div class="w-full bg-[#15102d] h-2 rounded-full overflow-hidden border border-white/5">
+                <div id="heroBudgetProgressBar" class="h-full rounded-full bg-gradient-to-r from-emerald-400 via-amber-400 to-rose-400 progress-fill" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Katta Raqam -->
-        <div class="flex items-baseline gap-2">
-          <h2 id="totalExpenseHero" class="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-none">
-            0 so'm
-          </h2>
-        </div>
-
-        <!-- 3 ta ixcham mikro-karta (Gorizontal qator) -->
-        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-white/10">
+        <!-- 3 TA IXCHAM MOLIYAVIY VIDJET (SHU OY, BUGUN, TOP SOHA) -->
+        <div class="grid grid-cols-3 gap-2">
           
-          <div class="bg-white/10 backdrop-blur-md rounded-xl p-2 sm:p-2.5 border border-white/10 text-center sm:text-left">
-            <span class="text-[9px] sm:text-[11px] text-indigo-200/80 block uppercase font-bold tracking-wider">Amaliyotlar</span>
-            <div id="heroTxCount" class="text-xs sm:text-base font-extrabold text-white mt-0.5">0 ta</div>
+          <div class="glass-card rounded-2xl p-2.5 text-center space-y-1 hover:border-purple-500/35 transition">
+            <div class="w-6 h-6 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center text-[11px] mx-auto">
+              <i class="fa-solid fa-calendar-days"></i>
+            </div>
+            <span id="homeCurrentMonthName" class="text-[11px] font-bold text-purple-200 block truncate">Shu oy</span>
+            <div id="homeMonthExpense" class="text-xs sm:text-sm font-black text-white truncate">0 so'm</div>
+            <span class="text-[10px] text-slate-400 block truncate">Jami sarf</span>
           </div>
 
-          <div class="bg-white/10 backdrop-blur-md rounded-xl p-2 sm:p-2.5 border border-white/10 text-center sm:text-left">
-            <span class="text-[9px] sm:text-[11px] text-emerald-300 block uppercase font-bold tracking-wider" id="currentMonthName">Shu oy</span>
-            <div id="heroMonthExpense" class="text-xs sm:text-base font-extrabold text-emerald-300 mt-0.5 truncate">0 so'm</div>
+          <div class="glass-card rounded-2xl p-2.5 text-center space-y-1 hover:border-emerald-500/35 transition">
+            <div class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[11px] mx-auto">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <span class="text-[11px] font-bold text-emerald-300 block truncate">Bugun</span>
+            <div id="homeTodayExpense" class="text-xs sm:text-sm font-black text-emerald-400 truncate">0 so'm</div>
+            <span class="text-[10px] text-slate-400 block truncate">Kunlik sarf</span>
           </div>
 
-          <div class="bg-white/10 backdrop-blur-md rounded-xl p-2 sm:p-2.5 border border-white/10 text-center sm:text-left">
-            <span class="text-[9px] sm:text-[11px] text-amber-300 block uppercase font-bold tracking-wider">Top Soha</span>
-            <div id="heroTopCategory" class="text-xs sm:text-base font-extrabold text-amber-200 mt-0.5 truncate">-</div>
+          <div class="glass-card rounded-2xl p-2.5 text-center space-y-1 hover:border-amber-500/35 transition">
+            <div class="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center text-[11px] mx-auto">
+              <i class="fa-solid fa-crown"></i>
+            </div>
+            <span class="text-[11px] font-bold text-amber-300 block truncate">Top Soha</span>
+            <div id="homeTopCategory" class="text-xs sm:text-sm font-black text-amber-300 truncate">-</div>
+            <span class="text-[10px] text-slate-400 block truncate">Eng ko'p</span>
           </div>
 
         </div>
 
-      </div>
-    </section>
+        <!-- SO'NGGI AMALIYOTLAR (RECENT TRANSACTIONS) -->
+        <div class="glass-card rounded-2xl p-3.5 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-extrabold tracking-wide text-white uppercase flex items-center gap-1.5">
+              <i class="fa-solid fa-clock-rotate-left text-purple-400"></i>
+              So'nggi amaliyotlar
+            </h3>
+            <button onclick="switchTab('history')" class="text-xs font-bold text-purple-300 hover:text-white transition flex items-center gap-1">
+              <span>Barchasi</span>
+              <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+          </div>
 
-    <!-- B. KATEGORIYALAR (MOBILDA SURILADIGAN KARUSEL, DESKTOPDA GRID) -->
-    <section class="space-y-2">
-      <div class="flex items-center justify-between px-1">
-        <h3 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-          <i class="fa-solid fa-shapes text-indigo-500 text-xs"></i>
-          Kategoriyalar bo'yicha taqsimot
-        </h3>
-        <button id="resetCategoryFilterBtn" onclick="setCategoryFilter('all')" class="hidden text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
-          Barchasi &times;
-        </button>
-      </div>
+          <!-- Amaliyotlar ixcham ro'yxati -->
+          <div id="recentTransactionsList" class="space-y-2">
+            <!-- JS dinamik to'ldiradi -->
+          </div>
+        </div>
 
-      <!-- Gorizontal suriladigan ixcham ro'yxat -->
-      <div id="categoryCardsGrid" class="flex sm:grid sm:grid-cols-4 gap-2 sm:gap-3 overflow-x-auto no-scrollbar pb-1 -mx-3 px-3 sm:mx-0 sm:px-0">
-        <!-- JS dinamik ixcham kartochkalar chizadi -->
-      </div>
-    </section>
+      </section>
 
-    <!-- C. QIDIRUV VA DAVR FILTRLARI (BARCHASI / BUGUN / SHU OY) -->
-    <section class="bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl border border-white/70 dark:border-white/10 rounded-2xl p-2.5 sm:p-3.5 shadow-xl shadow-slate-950/10 space-y-2.5">
-      
-      <!-- Qidiruv maydoni -->
-      <div class="relative">
-        <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Xarajatlarni qidirish (izoh, summa)..." class="w-full h-10 px-3 pl-8 rounded-xl bg-slate-50/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
-        <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-      </div>
-
-      <!-- Vaqt bo'yicha filtrlar va kategoriya select -->
-      <div class="flex items-center justify-between gap-1.5 overflow-x-auto no-scrollbar pt-0.5">
+      <!-- ========================================================
+           TAB 2: TARIX (AMALIYOTLAR & FILTRLAR SAHIFASI)
+           ======================================================== -->
+      <section id="tab-history" class="tab-content space-y-3">
         
-        <!-- Vaqt tablari (Barchasi, Bugun, Shu oy) -->
-        <div class="flex bg-slate-100/90 dark:bg-slate-800/90 p-1 rounded-xl text-xs font-bold shrink-0 gap-1 border border-slate-200/60 dark:border-slate-700/60">
-          
-          <button onclick="setDatePeriodFilter('all')" id="periodAllBtn" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-sm transition active:scale-95 flex items-center gap-1.5">
-            <span>Barchasi</span>
-            <span id="badgeCountAll" class="text-[10px] px-1.5 py-0.2 bg-white/20 rounded-full font-extrabold">0</span>
-          </button>
-
-          <button onclick="setDatePeriodFilter('today')" id="periodTodayBtn" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition active:scale-95 flex items-center gap-1.5">
-            <span>Bugun</span>
-            <span id="badgeCountToday" class="text-[10px] px-1.5 py-0.2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full font-extrabold">0</span>
-          </button>
-
-          <button onclick="setDatePeriodFilter('this_month')" id="periodMonthBtn" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition active:scale-95 flex items-center gap-1.5">
-            <span>Shu oy</span>
-            <span id="badgeCountMonth" class="text-[10px] px-1.5 py-0.2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full font-extrabold">0</span>
-          </button>
-
-        </div>
-
-        <!-- Kategoriya select -->
-        <select id="filterCategoryDropdown" onchange="setCategoryFilter(this.value)" class="h-8 px-2 rounded-xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/60 dark:border-slate-700/60 text-xs font-semibold text-slate-700 dark:text-slate-300 focus:ring-1 focus:ring-emerald-500 cursor-pointer shrink-0">
-          <option value="all">Barcha sohalar</option>
-          <option value="food">Oziq-ovqat</option>
-          <option value="transport">Transport</option>
-          <option value="utilities">Kommunal</option>
-          <option value="entertainment">O'yin-kulgi</option>
-          <option value="shopping">Xaridlar</option>
-          <option value="health">Salomatlik</option>
-          <option value="education">Ta'lim</option>
-          <option value="other">Boshqa</option>
-        </select>
-
-      </div>
-
-    </section>
-
-    <!-- D. XARAJATLAR RO'YXATI (ASOSIY OQIM) -->
-    <section class="bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl border border-white/70 dark:border-white/10 rounded-2xl sm:rounded-3xl shadow-xl shadow-slate-950/10 overflow-hidden">
-      
-      <div class="px-3.5 py-2.5 sm:px-5 sm:py-3.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-            <i class="fa-solid fa-clock-rotate-left text-indigo-500"></i>
-            Xarajatlar tarixi
-          </h3>
-          <span id="currentFilterLabel" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-md">
-            Barchasi
+        <div class="flex items-center justify-between px-1">
+          <div>
+            <h2 class="text-base font-extrabold text-white">Amaliyotlar Tarixi</h2>
+            <p class="text-[11px] text-purple-300/70">Kirim va chiqimlar monitoringi</p>
+          </div>
+          <span id="filteredCountBadge" class="text-[11px] font-extrabold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+            0 ta amaliyot
           </span>
         </div>
 
-        <span id="filteredCountBadge" class="text-[10px] font-extrabold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
-          0 ta xarajat
-        </span>
-      </div>
-
-      <!-- Xarajat elementlari -->
-      <div id="expensesList" class="divide-y divide-slate-100 dark:divide-slate-800/70">
-        <!-- JS orqali to'ldiriladi -->
-      </div>
-
-      <!-- Bo'sh holat -->
-      <div id="emptyState" class="hidden py-10 px-4 text-center flex-col items-center justify-center space-y-2">
-        <div class="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-400 flex items-center justify-center text-xl mx-auto">
-          <i class="fa-regular fa-folder-open"></i>
+        <!-- Qidiruv Maydoni -->
+        <div class="relative">
+          <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Amaliyotlarni qidirish (izoh, summa)..." class="w-full h-11 px-3.5 pl-10 pr-9 rounded-2xl bg-[#161130] border border-purple-500/20 text-xs text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition shadow-inner">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-purple-400 text-xs"></i>
+          <button onclick="clearSearch()" id="clearSearchBtn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
+            <i class="fa-solid fa-circle-xmark text-sm"></i>
+          </button>
         </div>
-        <p class="text-xs font-bold text-slate-600 dark:text-slate-300">Bu davrda xarajatlar topilmadi</p>
-        <p class="text-[11px] text-slate-400">Pastdagi "+" tugmasi orqali yangi xarajat qo'shing yoki boshqa filtrni tanlang.</p>
+
+        <!-- 1-Filtr: Amaliyot turi (Barchasi, Chiqim, Kirim) -->
+        <div class="grid grid-cols-3 p-1 bg-[#161130] rounded-2xl border border-purple-500/20 text-xs font-bold gap-1">
+          <button onclick="setTransactionTypeFilter('all')" id="typeFilterAllBtn" class="touch-btn h-9 rounded-xl bg-purple-600 text-white transition active:scale-95 text-center">
+            Barchasi
+          </button>
+          <button onclick="setTransactionTypeFilter('expense')" id="typeFilterExpenseBtn" class="touch-btn h-9 rounded-xl text-slate-400 hover:text-white transition active:scale-95 text-center">
+            📉 Chiqim
+          </button>
+          <button onclick="setTransactionTypeFilter('income')" id="typeFilterIncomeBtn" class="touch-btn h-9 rounded-xl text-slate-400 hover:text-white transition active:scale-95 text-center">
+            📈 Kirim
+          </button>
+        </div>
+
+        <!-- 2-Filtr: Vaqt davri va Kategoriya tanlash -->
+        <div class="flex items-center justify-between gap-2">
+          
+          <!-- Davr tablari (Barchasi, Bugun, Shu oy) -->
+          <div class="flex bg-[#161130] p-1 rounded-xl border border-purple-500/20 text-xs font-bold gap-1 shrink-0">
+            <button onclick="setDatePeriodFilter('all')" id="periodAllBtn" class="px-2.5 py-1.5 rounded-lg bg-purple-600 text-white shadow-sm transition active:scale-95 flex items-center gap-1.5 text-[11px]">
+              <span>Barchasi</span>
+              <span id="badgeCountAll" class="text-[10px] px-1.5 py-0.2 bg-white/20 rounded-full font-black">0</span>
+            </button>
+
+            <button onclick="setDatePeriodFilter('today')" id="periodTodayBtn" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition active:scale-95 flex items-center gap-1.5 text-[11px]">
+              <span>Bugun</span>
+              <span id="badgeCountToday" class="text-[10px] px-1.5 py-0.2 bg-slate-800 text-slate-300 rounded-full font-black">0</span>
+            </button>
+
+            <button onclick="setDatePeriodFilter('this_month')" id="periodMonthBtn" class="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition active:scale-95 flex items-center gap-1.5 text-[11px]">
+              <span>Shu oy</span>
+              <span id="badgeCountMonth" class="text-[10px] px-1.5 py-0.2 bg-slate-800 text-slate-300 rounded-full font-black">0</span>
+            </button>
+          </div>
+
+          <!-- Kategoriya dropdown -->
+          <select id="filterCategoryDropdown" onchange="setCategoryFilter(this.value)" class="h-9 px-2.5 rounded-xl bg-[#161130] border border-purple-500/20 text-xs font-semibold text-purple-200 focus:ring-1 focus:ring-purple-500 cursor-pointer w-full max-w-[140px] truncate">
+            <option value="all">Barcha sohalar</option>
+            <option value="food">🍔 Oziq-ovqat</option>
+            <option value="transport">🚕 Transport</option>
+            <option value="utilities">⚡ Kommunal</option>
+            <option value="entertainment">🎬 O'yin-kulgi</option>
+            <option value="shopping">🛍️ Xaridlar</option>
+            <option value="health">💊 Salomatlik</option>
+            <option value="education">📚 Ta'lim</option>
+            <option value="salary">💼 Oylik maosh (Kirim)</option>
+            <option value="freelance">💻 Qo'shimcha ish (Kirim)</option>
+            <option value="investment">📈 Investitsiya (Kirim)</option>
+            <option value="gift">🎁 Hadya / Sovg'a (Kirim)</option>
+            <option value="other_income">💰 Boshqa kirim</option>
+            <option value="other">📦 Boshqa xarajat</option>
+          </select>
+        </div>
+
+        <!-- Filtr holati bildirgi -->
+        <div class="flex items-center justify-between text-[11px] text-purple-300/70 px-1">
+          <span>Tanlangan: <strong id="currentFilterLabel" class="text-purple-300 font-extrabold">Barchasi</strong></span>
+          <button id="resetCategoryFilterBtn" onclick="setCategoryFilter('all')" class="hidden text-rose-400 hover:underline font-bold">
+            Kategoriyani bekor qilish &times;
+          </button>
+        </div>
+
+        <!-- Xarajatlar va Kirimlar ro'yxati -->
+        <div id="expensesList" class="space-y-2">
+          <!-- JS dinamik to'ldiradi -->
+        </div>
+
+        <!-- Bo'sh holat (Empty state) -->
+        <div id="emptyState" class="hidden py-12 px-4 text-center flex-col items-center justify-center space-y-3 glass-card rounded-2xl">
+          <div class="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center text-2xl mx-auto">
+            <i class="fa-regular fa-folder-open"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-white">Amaliyotlar topilmadi</h4>
+            <p class="text-xs text-slate-400 mt-1">Ushbu filtr bo'yicha hech qanday ma'lumot mavjud emas.</p>
+          </div>
+          <button onclick="openExpenseModal()" class="touch-btn px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 active:scale-95 text-white font-bold text-xs shadow-md shadow-purple-600/30 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-plus text-xs"></i>
+            <span>Yangi amaliyot kiritish</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 3: STATISTIKA (AYLANA GRAFIK, BUDJET VA TAHLIL)
+           ======================================================== -->
+      <section id="tab-analytics" class="tab-content space-y-3.5">
+        
+        <!-- Sarlavha va Davr tablari -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between px-1">
+            <div>
+              <h2 class="text-base font-extrabold text-white">Moliyaviy Statistika</h2>
+              <p class="text-[11px] text-purple-300/70">Budjet, daromad va xarajatlar tahlili</p>
+            </div>
+          </div>
+
+          <!-- Davr tablari (Shu oy, Bugun, Barchasi) -->
+          <div class="flex bg-[#161130] p-1 rounded-2xl border border-purple-500/20 text-xs font-bold gap-1">
+            <button onclick="setAnalyticsPeriod('this_month')" id="analyticsPeriodMonthBtn" class="touch-btn flex-1 h-9 rounded-xl bg-purple-600 text-white shadow-sm transition active:scale-95 text-center text-xs">
+              Shu oy
+            </button>
+            <button onclick="setAnalyticsPeriod('today')" id="analyticsPeriodTodayBtn" class="touch-btn flex-1 h-9 rounded-xl text-slate-400 hover:text-white transition active:scale-95 text-center text-xs">
+              Bugun
+            </button>
+            <button onclick="setAnalyticsPeriod('all')" id="analyticsPeriodAllBtn" class="touch-btn flex-1 h-9 rounded-xl text-slate-400 hover:text-white transition active:scale-95 text-center text-xs">
+              Barchasi
+            </button>
+          </div>
+        </div>
+
+        <!-- 3 TA ASOSIY KO'RSATKICH (KIRIM, CHIQIM, SOF QOLDIQ) -->
+        <div class="grid grid-cols-3 gap-2">
+          <div class="glass-card rounded-2xl p-2.5 space-y-1 border border-emerald-500/25">
+            <span class="text-[10px] font-extrabold text-emerald-400 uppercase tracking-wider block">Kirim</span>
+            <div id="analyticsIncomeVal" class="text-xs sm:text-sm font-black text-emerald-300 truncate">+0 so'm</div>
+            <span class="text-[10px] text-slate-400 block truncate">Daromadlar</span>
+          </div>
+
+          <div class="glass-card rounded-2xl p-2.5 space-y-1 border border-rose-500/25">
+            <span class="text-[10px] font-extrabold text-rose-400 uppercase tracking-wider block">Chiqim</span>
+            <div id="analyticsExpenseVal" class="text-xs sm:text-sm font-black text-rose-300 truncate">-0 so'm</div>
+            <span class="text-[10px] text-slate-400 block truncate">Xarajatlar</span>
+          </div>
+
+          <div class="glass-card rounded-2xl p-2.5 space-y-1 border border-purple-500/25">
+            <span class="text-[10px] font-extrabold text-purple-300 uppercase tracking-wider block">Sof Qoldiq</span>
+            <div id="analyticsSavingsVal" class="text-xs sm:text-sm font-black text-purple-200 truncate">0 so'm</div>
+            <span id="analyticsSavingsRate" class="text-[10px] font-extrabold text-emerald-400 block truncate">0% tejandi</span>
+          </div>
+        </div>
+
+        <!-- AYLANA GRAFIK (DONUT CHART) -->
+        <div class="glass-card rounded-3xl p-4 space-y-3 border border-purple-500/20">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-extrabold tracking-wide text-white uppercase flex items-center gap-1.5">
+              <i class="fa-solid fa-chart-pie text-purple-400"></i>
+              Xarajatlar Taqsimoti (Aylana Grafik)
+            </h3>
+            <span id="analyticsChartPeriodBadge" class="text-[10px] text-purple-300 font-extrabold bg-purple-500/20 px-2.5 py-0.5 rounded-full border border-purple-500/30">Shu oy</span>
+          </div>
+
+          <!-- SVG Donut Chart va Markaziy Matn -->
+          <div class="relative py-2 flex items-center justify-center">
+            <svg id="donutSvg" class="w-48 h-48 transform -rotate-90 filter drop-shadow-[0_6px_20px_rgba(147,51,234,0.3)]" viewBox="0 0 160 160">
+              <!-- JS orqali dinamik chiziladi -->
+            </svg>
+
+            <!-- Aylana markazi: Jami Chiqim -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-4">
+              <span class="text-[10px] uppercase font-bold text-purple-300/80 tracking-wider">Jami Chiqim</span>
+              <div id="donutCenterAmount" class="text-base sm:text-lg font-black text-white leading-tight mt-0.5">0 so'm</div>
+              <span id="donutCenterCategory" class="text-[11px] font-bold text-purple-300 mt-0.5 truncate max-w-[130px]">-</span>
+            </div>
+          </div>
+
+          <!-- Kategoriya Afsonasi (Legend Grid) -->
+          <div id="donutLegendGrid" class="grid grid-cols-2 gap-2 pt-2 border-t border-purple-500/15 text-xs">
+            <!-- JS to'ldiradi -->
+          </div>
+        </div>
+
+        <!-- OILA BUDJETI VA KUNLIK XAVFSIZ ME'YOR -->
+        <div class="glass-card rounded-3xl p-3.5 space-y-3 border border-purple-500/20">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-bullseye"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-white">Oylik Rejali Budjet</h4>
+                <p class="text-[10px] text-purple-300/70">Oila mablag'i taqsimoti</p>
+              </div>
+            </div>
+            <button onclick="openBudgetModal()" class="touch-btn text-xs font-bold text-purple-200 hover:text-white flex items-center gap-1.5 bg-purple-600/25 px-3 py-1 rounded-xl border border-purple-500/30 active:scale-95">
+              <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+              <span>O'zgartirish</span>
+            </button>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-xs font-extrabold">
+              <span id="analyticsBudgetRemainingText" class="text-emerald-400">Qoldi: 0 so'm</span>
+              <span id="analyticsBudgetPercentText" class="text-purple-300">0% sarflandi</span>
+            </div>
+            <div class="w-full bg-[#181136] h-2.5 rounded-full overflow-hidden border border-white/10">
+              <div id="analyticsBudgetProgressBar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 via-amber-500 to-rose-500 progress-fill" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Kunlik me'yor tavsiyasi (Financial Advisor card) -->
+          <div class="p-3 rounded-2xl bg-purple-900/20 border border-purple-500/20 flex items-center gap-3 text-xs">
+            <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0 text-sm">
+              <i class="fa-solid fa-lightbulb"></i>
+            </div>
+            <div class="min-w-0">
+              <span class="font-bold text-white block text-xs">Kunlik tavsiya etilgan me'yor:</span>
+              <span id="analyticsDailySafeLimit" class="text-purple-200 font-extrabold block text-xs mt-0.5">Kuniga 0 so'm</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOHALAR BO'YICHA BATAFSIL RO'YXAT -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between px-1">
+            <h3 class="text-xs font-extrabold tracking-wide text-white uppercase flex items-center gap-1.5">
+              <i class="fa-solid fa-shapes text-purple-400"></i>
+              Sohalar bo'yicha batafsil
+            </h3>
+            <span class="text-[11px] text-purple-300/70 font-semibold">Taqsimot</span>
+          </div>
+
+          <div id="categoryAnalyticsGrid" class="space-y-2">
+            <!-- JS dinamik chizadi -->
+          </div>
+        </div>
+
+        <!-- BARCHA OYLAR BO'YICHA TAQQOSLASH VA TARIXIY TAHLIL -->
+        <div class="space-y-2 pt-1">
+          <div class="flex items-center justify-between px-1">
+            <h3 class="text-xs font-extrabold tracking-wide text-white uppercase flex items-center gap-1.5">
+              <i class="fa-solid fa-chart-line text-purple-400"></i>
+              Oylar bo'yicha tahlil (Taqqos)
+            </h3>
+            <span class="text-[11px] text-purple-300/70 font-semibold">Barcha oylar</span>
+          </div>
+
+          <!-- Oylar ro'yxati (Sentyabr, Avgust, Iyul...) -->
+          <div id="monthlyHistoryComparisonList" class="space-y-2">
+            <!-- JS dinamik to'ldiradi -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 4: PROFIL (SOZLAMALAR & FINTECH PROFIL)
+           ======================================================== -->
+      <section id="tab-profile" class="tab-content space-y-3.5">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between px-1">
+          <h2 class="text-base font-extrabold text-white">Profil va Sozlamalar</h2>
+          <button onclick="openEditNameModal()" class="touch-btn w-9 h-9 rounded-xl bg-[#161130] text-purple-300 hover:text-white flex items-center justify-center border border-purple-500/20 transition" title="Tahrirlash">
+            <i class="fa-solid fa-pen-to-square text-xs"></i>
+          </button>
+        </div>
+
+        <!-- Foydalanuvchi kartasi va Fintech personaj -->
+        <div class="relative py-2 flex flex-col items-center justify-center text-center">
+          
+          <div class="absolute w-44 h-44 bg-gradient-to-tr from-purple-600/30 to-indigo-500/30 rounded-full blur-2xl pointer-events-none"></div>
+
+          <!-- Qahramon rasmi (Avatar SVG) -->
+          <div class="relative w-32 h-32 flex items-center justify-center">
+            
+            <div class="absolute -top-1 -left-2 text-amber-400 text-lg animate-float-1 drop-shadow-[0_4px_8px_rgba(245,158,11,0.5)]">
+              <i class="fa-solid fa-coins"></i>
+            </div>
+            <div class="absolute top-2 -right-3 text-amber-300 text-base animate-float-2 drop-shadow-[0_4px_8px_rgba(245,158,11,0.5)]">
+              <i class="fa-solid fa-circle-dollar-to-slot"></i>
+            </div>
+
+            <svg class="w-28 h-28 drop-shadow-2xl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="60" cy="60" r="56" fill="url(#avatar_bg)" stroke="#a855f7" stroke-width="2"/>
+              <ellipse cx="60" cy="48" rx="20" ry="22" fill="#fed7aa"/>
+              <path d="M40 45C40 32 49 24 60 24C71 24 80 32 80 45C76 39 69 36 60 36C51 36 44 40 40 45Z" fill="#1e1b4b"/>
+              <ellipse cx="53" cy="48" rx="2.5" ry="3.5" fill="#0f172a"/>
+              <ellipse cx="67" cy="48" rx="2.5" ry="3.5" fill="#0f172a"/>
+              <circle cx="54" cy="47" r="1" fill="#ffffff"/>
+              <circle cx="68" cy="47" r="1" fill="#ffffff"/>
+              <path d="M54 58C56 61 64 61 66 58" stroke="#be123c" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M35 100C35 84 45 74 60 74C75 74 85 84 85 100Z" fill="url(#hoodie_grad)"/>
+              <rect x="46" y="80" width="28" height="18" rx="4" fill="#e11d48"/>
+              <path d="M48 83L60 91L72 83" stroke="#fecdd3" stroke-width="1.5"/>
+              <circle cx="60" cy="89" r="2.5" fill="#fbbf24"/>
+              <defs>
+                <linearGradient id="avatar_bg" x1="10" y1="10" x2="110" y2="110" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#4c1d95"/>
+                  <stop offset="1" stop-color="#1e1b4b"/>
+                </linearGradient>
+                <linearGradient id="hoodie_grad" x1="35" y1="74" x2="85" y2="100" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#9333ea"/>
+                  <stop offset="1" stop-color="#4f46e5"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          <div class="mt-2 w-full p-3 rounded-2xl bg-[#181136]/90 border border-purple-500/25 flex items-center justify-between shadow-xl">
+            <div class="text-left">
+              <h3 id="profileCardName" class="text-sm font-extrabold text-white">Atxambek</h3>
+              <p id="profileCardTag" class="text-xs text-purple-300 font-medium">@atxambek</p>
+            </div>
+            <button onclick="openEditNameModal()" class="touch-btn w-8 h-8 rounded-xl bg-purple-600/20 text-purple-300 hover:text-white flex items-center justify-center">
+              <i class="fa-solid fa-pen text-xs"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- 2 TA KO'RSATKICH KARTASI -->
+        <div class="grid grid-cols-2 gap-2.5">
+          <div class="glass-card rounded-2xl p-3 space-y-1">
+            <div class="w-8 h-8 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center text-purple-300 text-xs">
+              <i class="fa-solid fa-shield-cat"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-white">Standard</h4>
+              <p class="text-[10px] text-slate-400">Shaxsiy tarif</p>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-2xl p-3 space-y-1">
+            <div class="flex items-center justify-between">
+              <div class="w-8 h-8 rounded-xl bg-indigo-500/15 border border-indigo-500/25 flex items-center justify-center text-indigo-300 text-xs">
+                <i class="fa-solid fa-coins"></i>
+              </div>
+              <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-300 border border-purple-400/30">UZS</span>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-white">Valyuta</h4>
+              <p class="text-[10px] text-slate-400">O'zbek so'mi</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOZLAMALAR VA MENYULAR RO'YXATI -->
+        <div class="glass-card rounded-2xl divide-y divide-purple-500/10 overflow-hidden">
+          
+          <!-- Tungi rejim almashtirish -->
+          <div class="py-3 px-3.5 flex items-center justify-between hover:bg-purple-900/10 transition">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-purple-500/15 text-purple-300 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-moon"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-white">Tungi rejim</h4>
+                <p class="text-[10px] text-slate-400">Qulay ko'rinish</p>
+              </div>
+            </div>
+            <button onclick="toggleTheme()" class="w-11 h-6 rounded-full bg-purple-600 p-0.5 flex items-center transition-colors">
+              <div id="profileThemeKnob" class="w-5 h-5 rounded-full bg-white shadow-md transform translate-x-5 transition-transform"></div>
+            </button>
+          </div>
+
+          <!-- Ismni o'zgartirish -->
+          <div onclick="openEditNameModal()" class="py-3 px-3.5 flex items-center justify-between hover:bg-purple-900/10 transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-blue-500/15 text-blue-300 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-user-pen"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-white">Ismni o'zgartirish</h4>
+                <p class="text-[10px] text-slate-400">Profil nomini yangilang</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+          </div>
+
+          <!-- Ma'lumotlarni eksport qilish -->
+          <div onclick="exportDataJSON()" class="py-3 px-3.5 flex items-center justify-between hover:bg-purple-900/10 transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-300 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-download"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-white">Zaxira nusxa (Eksport)</h4>
+                <p class="text-[10px] text-slate-400">JSON faylga saqlash</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+          </div>
+
+          <!-- Ma'lumotlarni import qilish -->
+          <label class="py-3 px-3.5 flex items-center justify-between hover:bg-purple-900/10 transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-indigo-500/15 text-indigo-300 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-upload"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-white">Nusxani tiklash (Import)</h4>
+                <p class="text-[10px] text-slate-400">JSON fayldan yuklash</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+            <input type="file" accept=".json" onchange="importDataJSON(event)" class="hidden">
+          </label>
+
+          <!-- Barcha ma'lumotlarni tozalash -->
+          <div onclick="confirmResetData()" class="py-3 px-3.5 flex items-center justify-between hover:bg-rose-950/20 transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-rose-500/15 text-rose-400 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-trash-can"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-rose-400">Barcha ma'lumotlarni tozalash</h4>
+                <p class="text-[10px] text-slate-400">Tarixni butunlay o'chirish</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-rose-500/50"></i>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ========================================================
+         MOBIL PASTKI NAVIGATION TUGMALARI (ERGONOMIC BOTTOM DOCK)
+         ======================================================== -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40">
+      <div class="max-w-md mx-auto px-4 safe-bottom">
+        <div class="bottom-dock rounded-2xl py-1.5 px-3 flex items-center justify-between border border-white/10">
+          
+          <!-- 1. ASOSIY (HOME) -->
+          <button id="navBtn-home" onclick="switchTab('home')" class="touch-btn nav-btn flex flex-col items-center justify-center transition-all p-1" title="Asosiy">
+            <div class="nav-icon-container w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center shadow-md shadow-purple-600/35 transition-all">
+              <i class="fa-solid fa-wallet text-sm"></i>
+            </div>
+            <span class="nav-label text-[10px] font-bold text-purple-300 mt-0.5">Asosiy</span>
+          </button>
+
+          <!-- 2. TARIX (RECEIPT/HISTORY) -->
+          <button id="navBtn-history" onclick="switchTab('history')" class="touch-btn nav-btn flex flex-col items-center justify-center transition-all p-1" title="Tarix">
+            <div class="nav-icon-container w-9 h-9 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-all">
+              <i class="fa-solid fa-clock-rotate-left text-sm"></i>
+            </div>
+            <span class="nav-label text-[10px] font-medium text-slate-400 mt-0.5">Tarix</span>
+          </button>
+
+          <!-- 3. MARKAZIY QO'SHISH TUGMASI (+) -->
+          <button onclick="openExpenseModal()" class="touch-btn flex flex-col items-center justify-center transition-all p-1 -mt-4 group" title="Qo'shish">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-pink-500 text-white flex items-center justify-center shadow-lg shadow-purple-600/40 ring-4 ring-[#090717] group-hover:scale-105 transition-all">
+              <i class="fa-solid fa-plus text-lg font-black"></i>
+            </div>
+            <span class="text-[10px] font-extrabold text-purple-300 mt-0.5">Kiritish</span>
+          </button>
+
+          <!-- 4. TAHLIL (ANALYTICS) -->
+          <button id="navBtn-analytics" onclick="switchTab('analytics')" class="touch-btn nav-btn flex flex-col items-center justify-center transition-all p-1" title="Tahlil">
+            <div class="nav-icon-container w-9 h-9 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-all">
+              <i class="fa-solid fa-chart-pie text-sm"></i>
+            </div>
+            <span class="nav-label text-[10px] font-medium text-slate-400 mt-0.5">Tahlil</span>
+          </button>
+
+          <!-- 5. PROFIL -->
+          <button id="navBtn-profile" onclick="switchTab('profile')" class="touch-btn nav-btn flex flex-col items-center justify-center transition-all p-1" title="Profil">
+            <div class="nav-icon-container w-9 h-9 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-all">
+              <i class="fa-solid fa-user text-sm"></i>
+            </div>
+            <span class="nav-label text-[10px] font-medium text-slate-400 mt-0.5">Profil</span>
+          </button>
+
+        </div>
       </div>
+    </nav>
 
-    </section>
-
-  </main>
-
-  <!-- ========================================================
-       3. MOBIL UCHUN SUZUVCHI TUGMA (FAB - FLOATING ACTION BUTTON)
-       ======================================================== -->
-  <div class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40">
-    <button onclick="openExpenseModal()" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 active:scale-90 text-white flex items-center justify-center shadow-2xl shadow-emerald-500/40 ring-4 ring-emerald-400/25 transition">
-      <i class="fa-solid fa-plus text-xl"></i>
-    </button>
   </div>
 
   <!-- ========================================================
-       4. MOBIL PASTKI DARCHA / MODAL (BOTTOM SHEET / DRAWER)
+       MODAL 1: YANGI AMALIYOT QO'SHISH (BOTTOM SHEET UX)
        ======================================================== -->
-  <div id="expenseModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
-    
-    <!-- Modal ramkasi: Mobilda pastdan chiqadi, Desktopda markazda -->
-    <div class="bg-white dark:bg-slate-900 w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl border-t sm:border border-slate-200 dark:border-slate-800 space-y-4 animate-slide-up safe-bottom">
+  <div id="expenseModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+    <div class="bg-[#15102d] text-white w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl border-t sm:border border-purple-500/25 space-y-4 animate-slide-up safe-bottom">
       
-      <!-- Modal bosh qismi va yopish chizig'i -->
-      <div>
-        <div class="w-10 h-1 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-3 sm:hidden"></div>
-        <div class="flex items-center justify-between">
-          <h3 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <i class="fa-solid fa-circle-plus text-indigo-600"></i>
-            Yangi xarajat qo'shish
-          </h3>
-          <button onclick="closeExpenseModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-600 flex items-center justify-center">
-            <i class="fa-solid fa-xmark text-sm"></i>
-          </button>
+      <!-- Grabber bar -->
+      <div class="sheet-grabber sm:hidden"></div>
+
+      <!-- Modal bosh qismi -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div id="modalHeaderIconBox" class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-sm">
+            <i id="modalHeaderIcon" class="fa-solid fa-arrow-trend-down"></i>
+          </div>
+          <h3 id="modalTitle" class="text-sm sm:text-base font-extrabold text-white">Yangi amaliyot kiritish</h3>
         </div>
+        <button onclick="closeExpenseModal()" class="touch-btn w-8 h-8 rounded-full bg-white/10 text-slate-300 hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
       </div>
 
-      <!-- Xarajat formasi -->
+      <!-- Chiqim / Kirim almashtirish tugmalari -->
+      <div class="grid grid-cols-2 p-1 bg-[#1c153c] rounded-2xl border border-purple-500/20 text-xs font-bold gap-1">
+        <button type="button" id="modalTypeExpenseBtn" onclick="setModalType('expense')" class="touch-btn h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center gap-1.5 shadow-md transition active:scale-95">
+          <i class="fa-solid fa-arrow-trend-down text-rose-300"></i>
+          <span>Chiqim (-)</span>
+        </button>
+        <button type="button" id="modalTypeIncomeBtn" onclick="setModalType('income')" class="touch-btn h-10 rounded-xl text-slate-400 hover:text-white flex items-center justify-center gap-1.5 transition active:scale-95">
+          <i class="fa-solid fa-arrow-trend-up text-emerald-400"></i>
+          <span>Kirim (+)</span>
+        </button>
+      </div>
+
+      <!-- Forma -->
       <form id="expenseForm" onsubmit="handleExpenseSubmit(event)" class="space-y-3.5">
         
         <!-- Summa -->
         <div>
-          <label for="amountInput" class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">
-            Summa (so'm) <span class="text-rose-500">*</span>
+          <label for="amountInput" class="block text-xs font-bold text-purple-200 mb-1">
+            Summa (so'm) <span class="text-rose-400">*</span>
           </label>
           <div class="relative">
-            <input type="number" id="amountInput" required min="100" step="any" placeholder="Masalan: 35 000" class="w-full h-11 px-3.5 pl-10 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base font-extrabold text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
+            <input type="text" inputmode="numeric" id="amountInput" required oninput="formatAmountInput(this)" placeholder="Masalan: 45,000" class="w-full h-12 px-3.5 pl-11 rounded-2xl bg-[#1c153c] border border-purple-500/25 text-lg font-black text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-inner">
+            <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-purple-400 text-base">
               <i class="fa-solid fa-coins"></i>
             </div>
           </div>
 
-          <!-- Tezkor summa tugmalari -->
-          <div class="grid grid-cols-4 gap-1.5 mt-1.5">
-            <button type="button" onclick="addQuickAmount(10000)" class="py-1 text-[11px] font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 transition">
+          <!-- Tezkor summa qo'shish tugmalari -->
+          <div class="grid grid-cols-4 gap-1.5 mt-2">
+            <button type="button" onclick="addQuickAmount(10000)" class="touch-btn h-8 text-xs font-bold rounded-xl bg-[#22184a] text-purple-200 hover:bg-purple-600 hover:text-white transition active:scale-95 border border-purple-500/20">
               +10k
             </button>
-            <button type="button" onclick="addQuickAmount(50000)" class="py-1 text-[11px] font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 transition">
+            <button type="button" onclick="addQuickAmount(50000)" class="touch-btn h-8 text-xs font-bold rounded-xl bg-[#22184a] text-purple-200 hover:bg-purple-600 hover:text-white transition active:scale-95 border border-purple-500/20">
               +50k
             </button>
-            <button type="button" onclick="addQuickAmount(100000)" class="py-1 text-[11px] font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 transition">
+            <button type="button" onclick="addQuickAmount(100000)" class="touch-btn h-8 text-xs font-bold rounded-xl bg-[#22184a] text-purple-200 hover:bg-purple-600 hover:text-white transition active:scale-95 border border-purple-500/20">
               +100k
             </button>
-            <button type="button" onclick="addQuickAmount(500000)" class="py-1 text-[11px] font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 transition">
+            <button type="button" onclick="addQuickAmount(500000)" class="touch-btn h-8 text-xs font-bold rounded-xl bg-[#22184a] text-purple-200 hover:bg-purple-600 hover:text-white transition active:scale-95 border border-purple-500/20">
               +500k
             </button>
           </div>
         </div>
 
-        <!-- Kategoriya va Sana (2 ustun) -->
+        <!-- Kategoriya va Sana -->
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label for="categorySelect" class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">
-              Kategoriya <span class="text-rose-500">*</span>
+            <label for="categorySelect" class="block text-xs font-bold text-purple-200 mb-1">
+              Kategoriya <span class="text-rose-400">*</span>
             </label>
-            <select id="categorySelect" required class="w-full h-10 px-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <option value="food">🍔 Oziq-ovqat</option>
-              <option value="transport">🚕 Transport</option>
-              <option value="utilities">⚡ Kommunal</option>
-              <option value="entertainment">🎬 O'yin-kulgi</option>
-              <option value="shopping">🛍️ Xaridlar</option>
-              <option value="health">💊 Salomatlik</option>
-              <option value="education">📚 Ta'lim</option>
-              <option value="other">📦 Boshqa</option>
+            <select id="categorySelect" required class="w-full h-11 px-3 rounded-2xl bg-[#1c153c] border border-purple-500/25 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer">
+              <!-- JS to'ldiradi -->
             </select>
           </div>
 
           <div>
-            <label for="dateInput" class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">
-              Sana <span class="text-rose-500">*</span>
+            <label for="dateInput" class="block text-xs font-bold text-purple-200 mb-1">
+              Sana <span class="text-rose-400">*</span>
             </label>
-            <input type="date" id="dateInput" required class="w-full h-10 px-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <input type="date" id="dateInput" required class="w-full h-11 px-3 rounded-2xl bg-[#1c153c] border border-purple-500/25 text-xs font-semibold text-white focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer">
           </div>
         </div>
 
         <!-- Izoh -->
         <div>
-          <label for="noteInput" class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">
+          <label for="noteInput" class="block text-xs font-bold text-purple-200 mb-1">
             Izoh / Tavsif
           </label>
-          <input type="text" id="noteInput" placeholder="Masalan: Tushlik, Bozorlik..." class="w-full h-10 px-3.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <input type="text" id="noteInput" placeholder="Masalan: Tushlik, Bozorlik, Taksi..." class="w-full h-11 px-3.5 rounded-2xl bg-[#1c153c] border border-purple-500/25 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-inner">
         </div>
 
         <!-- Saqlash tugmasi -->
-        <button type="submit" class="w-full h-11 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-extrabold text-xs sm:text-sm shadow-md shadow-indigo-600/25 transition flex items-center justify-center gap-1.5 mt-2">
+        <button type="submit" id="submitExpenseBtn" class="touch-btn w-full h-12 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-500 hover:from-purple-500 hover:to-indigo-500 active:scale-[0.98] text-white font-black text-sm shadow-xl shadow-purple-600/35 transition flex items-center justify-center gap-2 mt-2">
           <i class="fa-solid fa-check"></i>
-          <span>Xarajatni Saqlash</span>
+          <span id="submitExpenseBtnText">Xarajatni Saqlash</span>
         </button>
 
       </form>
@@ -357,32 +879,29 @@
   </div>
 
   <!-- ========================================================
-       MAXSUS O'RTADAN CHIQUVCHI TASDIQLASH OYNASI (CENTER CONFIRM MODAL)
+       MODAL 2: TASDIQLASH OYNASI (CONFIRM MODAL)
        ======================================================== -->
-  <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-4 transition-all">
-    <div class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-white/60 dark:border-white/10 w-full max-w-sm rounded-3xl p-6 shadow-2xl space-y-4 text-center animate-pop-in">
+  <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-all">
+    <div class="bg-[#181136] text-white border border-purple-500/25 w-full max-w-sm rounded-3xl p-6 shadow-2xl space-y-4 text-center animate-pop-in">
       
-      <!-- Qizil / Ogohlantiruvchi Ikonka -->
-      <div id="confirmIconBox" class="w-16 h-16 rounded-2xl bg-rose-500/10 text-rose-500 border border-rose-500/20 flex items-center justify-center text-2xl mx-auto shadow-lg shadow-rose-500/10">
+      <div id="confirmIconBox" class="w-14 h-14 rounded-2xl bg-rose-500/15 text-rose-500 border border-rose-500/25 flex items-center justify-center text-xl mx-auto shadow-lg shadow-rose-500/10">
         <i id="confirmModalIcon" class="fa-solid fa-trash-can"></i>
       </div>
 
-      <!-- Sarlavha va matn -->
       <div class="space-y-1.5">
-        <h3 id="confirmModalTitle" class="text-base font-extrabold text-slate-900 dark:text-white">
-          Xarajatni o'chirish
+        <h3 id="confirmModalTitle" class="text-base font-extrabold text-white">
+          Amaliyotni o'chirish
         </h3>
-        <p id="confirmModalDesc" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-          Ushbu xarajatni ro'yxatdan o'chirib tashlamoqchimisiz?
+        <p id="confirmModalDesc" class="text-xs text-slate-300 leading-relaxed">
+          Ushbu amaliyotni ro'yxatdan o'chirib tashlamoqchimisiz?
         </p>
       </div>
 
-      <!-- Tugmalar (Bekor qilish va Tasdiqlash) -->
       <div class="grid grid-cols-2 gap-2.5 pt-2">
-        <button type="button" onclick="closeConfirmModal()" class="py-2.5 px-4 text-xs font-bold rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-95 transition">
+        <button type="button" onclick="closeConfirmModal()" class="touch-btn h-11 text-xs font-bold rounded-xl bg-white/10 text-slate-300 hover:bg-white/15 active:scale-95 transition">
           Bekor qilish
         </button>
-        <button type="button" id="confirmActionBtn" class="py-2.5 px-4 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-700 active:scale-95 text-white shadow-md shadow-rose-600/25 transition">
+        <button type="button" id="confirmActionBtn" class="touch-btn h-11 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white shadow-md shadow-rose-600/30 transition">
           Ha, o'chirish
         </button>
       </div>
@@ -390,10 +909,166 @@
     </div>
   </div>
 
-  <!-- TOAST BILDIRISHNOMA -->
-  <div id="toastBox" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-2.5 rounded-xl shadow-xl text-xs font-bold flex items-center gap-2 transition-all">
-    <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
-    <span id="toastMsg">Bajarildi!</span>
+  <!-- ========================================================
+       MODAL 3: ISMNI TAHRIRLASH (EDIT NAME MODAL)
+       ======================================================== -->
+  <div id="editNameModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 transition-all">
+    <div class="bg-[#181136] text-white border border-purple-500/25 w-full max-w-sm rounded-3xl p-5 shadow-2xl space-y-4 animate-pop-in">
+      
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+          <i class="fa-solid fa-user-pen text-purple-400"></i>
+          Ismni o'zgartirish
+        </h3>
+        <button onclick="closeEditNameModal()" class="touch-btn w-8 h-8 rounded-full bg-white/10 text-slate-400 hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-purple-200 mb-1">Ismingiz</label>
+          <input type="text" id="editNameInput" placeholder="Ismingizni kiriting..." class="w-full h-11 px-3.5 rounded-xl bg-[#201744] border border-purple-500/25 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-purple-200 mb-1">Foydalanuvchi nomi (@tag)</label>
+          <input type="text" id="editTagInput" placeholder="Masalan: atxambek..." class="w-full h-11 px-3.5 rounded-xl bg-[#201744] border border-purple-500/25 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 pt-2">
+        <button type="button" onclick="closeEditNameModal()" class="touch-btn h-11 text-xs font-bold rounded-xl bg-white/10 text-slate-300 hover:bg-white/15">
+          Bekor qilish
+        </button>
+        <button type="button" onclick="saveUserName()" class="touch-btn h-11 text-xs font-bold rounded-xl bg-purple-600 hover:bg-purple-500 text-white shadow-md shadow-purple-600/30">
+          Saqlash
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 4: OYLIK BUDJETNI SOZLASH (BOTTOM SHEET UX)
+       ======================================================== -->
+  <div id="budgetModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+    <div class="bg-[#15102d] text-white w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl border-t sm:border border-purple-500/25 space-y-4 animate-slide-up safe-bottom">
+      
+      <!-- Grabber bar -->
+      <div class="sheet-grabber sm:hidden"></div>
+
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-sm">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-extrabold text-white">Oylik Oila Budjeti</h3>
+            <p class="text-[11px] text-purple-300/70">Rejalashtirilgan oylik umumiy xarajat chegarasi</p>
+          </div>
+        </div>
+        <button onclick="closeBudgetModal()" class="touch-btn w-8 h-8 rounded-full bg-white/10 text-slate-300 hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <form id="budgetForm" onsubmit="handleBudgetSubmit(event)" class="space-y-4">
+        <div>
+          <label for="budgetInput" class="block text-xs font-bold text-purple-200 mb-1">
+            Oylik Budjet Miqdori (so'm) <span class="text-rose-400">*</span>
+          </label>
+          <div class="relative">
+            <input type="text" inputmode="numeric" id="budgetInput" required oninput="formatAmountInput(this)" placeholder="Masalan: 10,000,000" class="w-full h-12 px-3.5 pl-11 rounded-2xl bg-[#1c153c] border border-purple-500/25 text-lg font-black text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-inner">
+            <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-purple-400 text-base">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
+          </div>
+
+          <!-- Tezkor budjet shablonlari -->
+          <div class="grid grid-cols-4 gap-1.5 mt-2">
+            <button type="button" onclick="setQuickBudget(5000000)" class="touch-btn h-9 text-xs font-bold rounded-xl bg-[#22184a] text-purple-200 hover:bg-purple-600 hover:text-white transition active:scale-95 border border-purple-500/20">
+              5 mln
+            </button>
+            <button type="button" onclick="setQuickBudget(10000000)" class="touch-btn h-9 text-xs font-bold rounded-xl bg-[#22184a] text-purple-200 hover:bg-purple-600 hover:text-white transition active:scale-95 border border-purple-500/20">
+              10 mln
+            </button>
+            <button type="button" onclick="setQuickBudget(15000000)" class="touch-btn h-9 text-xs font-bold rounded-xl bg-[#22184a] text-purple-200 hover:bg-purple-600 hover:text-white transition active:scale-95 border border-purple-500/20">
+              15 mln
+            </button>
+            <button type="button" onclick="setQuickBudget(20000000)" class="touch-btn h-9 text-xs font-bold rounded-xl bg-[#22184a] text-purple-200 hover:bg-purple-600 hover:text-white transition active:scale-95 border border-purple-500/20">
+              20 mln
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="touch-btn w-full h-12 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-500 hover:from-purple-500 hover:to-indigo-500 active:scale-[0.98] text-white font-black text-sm shadow-xl shadow-purple-600/35 transition flex items-center justify-center gap-2 mt-2">
+          <i class="fa-solid fa-check"></i>
+          <span>Budjetni Saqlash</span>
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 5: OYNI TANLASH BOTTOM SHEET (MONTH PICKER MODAL)
+       Barcha oylarni (Sentyabr, Avgust, Iyul...) tanlash
+       ======================================================== -->
+  <div id="monthPickerModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+    <div class="bg-[#15102d] text-white w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl border-t sm:border border-purple-500/25 space-y-4 animate-slide-up safe-bottom">
+      
+      <!-- Grabber bar -->
+      <div class="sheet-grabber sm:hidden"></div>
+
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-sm">
+            <i class="fa-regular fa-calendar-days"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-extrabold text-white">Hisobot Oyini Tanlash</h3>
+            <p class="text-[11px] text-purple-300/70">Kirim, chiqim va budjetni ko'rish uchun</p>
+          </div>
+        </div>
+        <button onclick="closeMonthPickerModal()" class="touch-btn w-8 h-8 rounded-full bg-white/10 text-slate-300 hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Yil navigatsiyasi -->
+      <div class="flex items-center justify-between p-2 bg-[#1c153c] rounded-2xl border border-purple-500/20">
+        <button onclick="changePickerYear(-1)" class="touch-btn w-9 h-9 rounded-xl bg-[#241a4e] text-purple-300 hover:text-white flex items-center justify-center active:scale-95 transition">
+          <i class="fa-solid fa-chevron-left text-xs"></i>
+        </button>
+        <div class="flex items-center gap-2">
+          <span id="pickerYearDisplay" class="text-sm sm:text-base font-black text-white">2026</span>
+          <span class="text-[10px] text-purple-300/70 font-semibold">(Yil)</span>
+        </div>
+        <button onclick="changePickerYear(1)" class="touch-btn w-9 h-9 rounded-xl bg-[#241a4e] text-purple-300 hover:text-white flex items-center justify-center active:scale-95 transition">
+          <i class="fa-solid fa-chevron-right text-xs"></i>
+        </button>
+      </div>
+
+      <!-- 12 ta oy gridi -->
+      <div id="monthsGridContainer" class="grid grid-cols-3 gap-2 pt-1">
+        <!-- JS dinamik to'ldiradi -->
+      </div>
+
+      <!-- Barcha davrlar tugmasi -->
+      <button onclick="selectMonthAll()" class="touch-btn w-full h-11 rounded-2xl bg-purple-900/30 hover:bg-purple-900/50 border border-purple-500/25 text-purple-200 font-extrabold text-xs flex items-center justify-center gap-2 transition active:scale-95">
+        <i class="fa-solid fa-layer-group text-xs"></i>
+        <span>Barcha oylar umumiy hisoboti</span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ========================================================
+       TOAST BILDIRISHNOMA (TOAST NOTIFICATION)
+       ======================================================== -->
+  <div id="toastBox" class="hidden fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-[#1f1642] text-white border border-purple-500/40 px-4 py-2.5 rounded-2xl shadow-2xl text-xs font-extrabold flex items-center gap-2.5 transition-all">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-purple-400 text-sm"></i>
+    <span id="toastMsg">Amal bajarildi!</span>
   </div>
 
   <!-- Maxsus JavaScript Fayli -->

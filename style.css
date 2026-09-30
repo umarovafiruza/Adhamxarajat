@@ -1,8 +1,51 @@
 /* ========================================================
-   XARAJATLAR NAZORATI - MAXSUS STILLAR VA ANIMATSIYALAR
+   XARAJATLAR NAZORATI - FINTECH MOBILE APP MAXSUS STILLARI
+   Apple iOS & Material Design UI/UX Standartlari Asosida
    ======================================================== */
 
-/* Yashirin scrollbar (gorizontal karusel uchun) */
+/* GLOBAL SCROLLBAR STABILITY (BRAUZERDA SAKRAMASLIKNI 100% YO'QOTISH) */
+:root {
+  --tg-viewport-height: 100vh;
+  --tg-viewport-stable-height: 100vh;
+}
+
+html {
+  overflow-y: scroll !important;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(168, 85, 247, 0.35) transparent;
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  min-height: var(--tg-viewport-height, 100vh);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Chrome, Edge, Safari uchun chiroyli nozik binafsha scrollbar (Sakramaydi) */
+html::-webkit-scrollbar {
+  width: 6px;
+}
+html::-webkit-scrollbar-track {
+  background: #06040f;
+}
+html::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.35);
+  border-radius: 9999px;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.6);
+}
+
+.light html::-webkit-scrollbar-track {
+  background: #f1f0f8;
+}
+.light html::-webkit-scrollbar-thumb {
+  background: rgba(147, 51, 234, 0.3);
+}
+
+/* 1. YASHIRIN VA MAXSUS SCROLLBAR */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -11,21 +54,23 @@
   scrollbar-width: none;
 }
 
-/* Maxsus ingichka scrollbar */
 .custom-scroll::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
 }
 .custom-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
 .custom-scroll::-webkit-scrollbar-thumb {
-  background-color: rgba(148, 163, 184, 0.3);
+  background-color: rgba(168, 85, 247, 0.25);
   border-radius: 9999px;
 }
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(168, 85, 247, 0.45);
+}
 
-/* Animatsiyalar */
-@keyframes slideUp {
+/* 2. SILIQ VA NAFIS ANIMATSIYALAR */
+@keyframes slideUpSheet {
   from {
     transform: translateY(100%);
     opacity: 0;
@@ -36,10 +81,10 @@
   }
 }
 
-@keyframes fadeIn {
+@keyframes fadeInFast {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
@@ -47,9 +92,18 @@
   }
 }
 
-@keyframes popIn {
+@keyframes tabFadeSmooth {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popInModal {
   0% {
-    transform: scale(0.92);
+    transform: scale(0.94);
     opacity: 0;
   }
   100% {
@@ -58,19 +112,256 @@
   }
 }
 
+@keyframes floatCoin {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(5deg);
+  }
+}
+
+@keyframes floatCoinReverse {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(-5deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.04);
+  }
+}
+
 .animate-slide-up {
-  animation: slideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUpSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.22s ease-out forwards;
+  animation: fadeInFast 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-pop-in {
-  animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: popInModal 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Mobil qurilmalar (iOS / Android) pastki xavfsiz sohasi */
+.animate-float-1 {
+  animation: floatCoin 3.5s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: floatCoinReverse 4.2s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* 3. MOBIL MOSLASHUV VA TOUCH STANDARTLARI */
 .safe-bottom {
-  padding-bottom: env(safe-area-inset-bottom, 16px);
+  padding-bottom: max(env(safe-area-inset-bottom, 12px), 12px);
+}
+
+/* Tugmalar uchun standart sensor teginish maydoni (Touch Target) */
+.touch-btn {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.touch-btn:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* Tab sahifalari (sakramaslik uchun) */
+.tab-content {
+  display: none;
+  opacity: 0;
+}
+.tab-content.active {
+  display: block;
+  opacity: 1;
+  animation: tabFadeSmooth 0.15s ease-out forwards;
+}
+
+/* 4. GLASSMORPHISM VA FINTECH KARTALARI */
+.glass-card {
+  background: rgba(21, 16, 43, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 85, 247, 0.14);
+}
+
+.light .glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+/* FinTech binafsha gradient hero karta */
+.purple-hero-card {
+  background: linear-gradient(140deg, #32165c 0%, #1e0e3d 55%, #130826 100%);
+  border: 1px solid rgba(168, 85, 247, 0.28);
+  box-shadow: 0 16px 36px -8px rgba(45, 14, 85, 0.55), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.12);
+}
+
+.light .purple-hero-card {
+  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  box-shadow: 0 16px 36px -8px rgba(99, 102, 241, 0.35);
+}
+
+/* Bottom Bar Dock */
+.bottom-dock {
+  background: rgba(18, 13, 38, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.45);
+}
+
+.light .bottom-dock {
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* 5. KUNDUZGI (LIGHT) REJIM QOPLAMASI */
+.light body {
+  background-color: #f1f0f8;
+  color: #1e1b4b;
+}
+
+.light .w-full.max-w-md {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: rgba(203, 213, 225, 0.6) !important;
+  color: #1e1b4b !important;
+}
+
+.light header#appHeader {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+.light .sticky.top-0 {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+.light header#appHeader h1,
+.light header#appHeader .text-white {
+  color: #0f172a !important;
+}
+
+.light header#appHeader button,
+.light #monthNavigatorBar button {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border-color: #cbd5e1 !important;
+}
+
+.light #monthNavigatorBar #currentMonthYearLabel {
+  color: #0f172a !important;
+}
+
+.light .tab-content h2,
+.light .tab-content h3 {
+  color: #0f172a !important;
+}
+
+.light .glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.light .glass-card h4,
+.light .glass-card .text-white {
+  color: #0f172a !important;
+}
+
+.light .glass-card p,
+.light .glass-card .text-slate-400 {
+  color: #64748b !important;
+}
+
+.light #searchInput,
+.light #filterCategoryDropdown,
+.light #noteInput,
+.light #dateInput,
+.light #amountInput,
+.light #budgetInput,
+.light #categorySelect {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* 6. AYLANA GRAFIK VA BUDJET INTERAKTIVLIGI */
+.donut-segment {
+  transition: stroke-dasharray 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
+              stroke-dashoffset 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
+              stroke-width 0.2s ease,
+              opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.donut-segment:hover {
+  stroke-width: 19;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.progress-fill {
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Bottom Sheet Grabber bar */
+.sheet-grabber {
+  width: 40px;
+  height: 4px;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.25);
+  margin: 0 auto 12px auto;
+}
+
+/* Segmented Control Pills */
+.segmented-control {
+  background: rgba(22, 17, 44, 0.9);
+  border: 1px solid rgba(168, 85, 247, 0.18);
+  border-radius: 14px;
+  padding: 3px;
+}
+
+/* Month Picker Grid Elements */
+.month-btn-active {
+  background: linear-gradient(135deg, #9333ea 0%, #6366f1 100%) !important;
+  color: #ffffff !important;
+  border-color: rgba(192, 132, 252, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(147, 51, 234, 0.35);
+}
+
+.month-btn-current {
+  position: relative;
+}
+.month-btn-current::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: #10b981;
 }
