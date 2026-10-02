@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Maxsus CSS Fayli -->
-  <link rel="stylesheet" href="style.css?v=20261002-v2">
+  <link rel="stylesheet" href="style.css?v=20261002-v3">
 
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -136,12 +136,12 @@
            ======================================================== -->
       <section id="tab-home" class="tab-content active space-y-3.5">
         
-        <!-- FINTECH HERO BALANS KARTASI (DEEP SAPPHIRE NAVY & MIDNIGHT TITANIUM) -->
-        <div class="purple-hero-card hero-balance-card rounded-[28px] p-4 sm:p-5 relative overflow-hidden text-white space-y-3.5" style="background: linear-gradient(145deg, #0b1329 0%, #111c38 50%, #080d1a 100%) !important; border: 1px solid rgba(56, 189, 248, 0.28) !important; box-shadow: 0 16px 36px -8px rgba(2, 6, 23, 0.7) !important;">
+        <!-- FINTECH HERO BALANS KARTASI (DARK SLATE & TITANIUM) -->
+        <div class="purple-hero-card hero-balance-card rounded-[28px] p-4 sm:p-5 relative overflow-hidden text-white space-y-3.5" style="background: linear-gradient(145deg, #182234 0%, #0f172a 100%) !important; border: 1px solid rgba(255, 255, 255, 0.14) !important; box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6) !important;">
           
-          <!-- Orqa fon yumshoq safir nurlari (binafsha butunlay yo'qotildi) -->
-          <div class="absolute -right-8 -top-8 w-44 h-44 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="absolute -left-8 -bottom-8 w-44 h-44 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+          <!-- Orqa fon yumshoq nurlari -->
+          <div class="absolute -right-8 -top-8 w-44 h-44 bg-slate-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -left-8 -bottom-8 w-44 h-44 bg-slate-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <!-- Karta yuqori qatori: Hamyon turi va Balans Statusi -->
           <div class="flex items-center justify-between relative z-10">
@@ -162,29 +162,29 @@
           </div>
 
           <!-- 2 Ustunli Kassaviy Oqim Ko'rsatkichi (Jami Kirim vs Jami Chiqim) -->
-          <div class="relative z-10 grid grid-cols-2 gap-2">
-            <!-- Jami Kirim: Tiniq to'q zumrad kartasi, yorqin yashil nishon va o'qiluvchan matn -->
-            <div class="hero-income-box p-2.5 rounded-2xl flex items-center gap-2.5 transition" style="background: linear-gradient(145deg, #032d22 0%, #021f17 100%) !important; border: 1.5px solid #10b981 !important; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.28) !important;">
-              <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 text-xs font-black shadow-md shadow-emerald-500/30" style="background-color: #10b981 !important; color: #ffffff !important;">
-                <i class="fa-solid fa-arrow-down-left"></i>
+          <div class="relative z-10 grid grid-cols-2 gap-2.5">
+            <!-- Jami Kirim: Yorqin to'q yashil (Emerald) kartasi, oq nishon va oq matn -->
+            <div class="hero-income-box p-3 rounded-2xl flex items-center gap-2.5 transition shadow-lg" style="background: linear-gradient(135deg, #059669 0%, #047857 100%) !important; border: 1.5px solid #34d399 !important; box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35) !important;">
+              <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 text-xs font-black shadow-sm" style="background-color: #ffffff !important; color: #047857 !important;">
+                <i class="fa-solid fa-arrow-down"></i>
               </div>
               <div class="min-w-0">
-                <span class="text-[11px] font-extrabold block leading-tight" style="color: #a7f3d0 !important;">Jami Kirim</span>
-                <div id="heroIncomeTotal" class="text-xs sm:text-sm font-black truncate mt-0.5 tracking-tight" style="color: #34d399 !important;">
-                  0 so'm
+                <span class="text-[11px] font-bold block leading-tight" style="color: #ecfdf5 !important;">Jami Kirim</span>
+                <div id="heroIncomeTotal" class="text-xs sm:text-sm font-black truncate mt-0.5 tracking-tight" style="color: #ffffff !important;">
+                  +0 so'm
                 </div>
               </div>
             </div>
 
-            <!-- Jami Chiqim: Tiniq to'q yoqut kartasi, yorqin qizil nishon va o'qiluvchan matn -->
-            <div class="hero-expense-box p-2.5 rounded-2xl flex items-center gap-2.5 transition" style="background: linear-gradient(145deg, #3d0c18 0%, #26060e 100%) !important; border: 1.5px solid #f43f5e !important; box-shadow: 0 4px 14px rgba(244, 63, 94, 0.28) !important;">
-              <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 text-xs font-black shadow-md shadow-rose-500/30" style="background-color: #f43f5e !important; color: #ffffff !important;">
-                <i class="fa-solid fa-arrow-up-right"></i>
+            <!-- Jami Chiqim: Yorqin to'q qizil (Ruby) kartasi, oq nishon va oq matn -->
+            <div class="hero-expense-box p-3 rounded-2xl flex items-center gap-2.5 transition shadow-lg" style="background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important; border: 1.5px solid #fb7185 !important; box-shadow: 0 6px 18px rgba(225, 29, 72, 0.35) !important;">
+              <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 text-xs font-black shadow-sm" style="background-color: #ffffff !important; color: #be123c !important;">
+                <i class="fa-solid fa-arrow-up"></i>
               </div>
               <div class="min-w-0">
-                <span class="text-[11px] font-extrabold block leading-tight" style="color: #fecdd3 !important;">Jami Chiqim</span>
-                <div id="heroExpenseTotal" class="text-xs sm:text-sm font-black truncate mt-0.5 tracking-tight" style="color: #fb7185 !important;">
-                  0 so'm
+                <span class="text-[11px] font-bold block leading-tight" style="color: #fff1f2 !important;">Jami Chiqim</span>
+                <div id="heroExpenseTotal" class="text-xs sm:text-sm font-black truncate mt-0.5 tracking-tight" style="color: #ffffff !important;">
+                  -0 so'm
                 </div>
               </div>
             </div>

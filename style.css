@@ -209,21 +209,21 @@ html::-webkit-scrollbar-thumb:hover {
   border: 1px solid rgba(226, 232, 240, 0.9);
 }
 
-/* FinTech Sapphire Hero Karta (Binafsha butunlay yo'qotildi: Deep Sapphire Navy & Midnight fon) */
+/* FinTech Hero Karta (Dark Slate / Charcoal uslubi) */
 .purple-hero-card,
 .hero-balance-card {
-  background: linear-gradient(145deg, #0b1329 0%, #111c38 50%, #080d1a 100%) !important;
-  border: 1px solid rgba(56, 189, 248, 0.28) !important;
-  box-shadow: 0 16px 36px -8px rgba(2, 6, 23, 0.7), 
-              inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+  background: linear-gradient(145deg, #182234 0%, #0f172a 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
 }
 
 .light .purple-hero-card,
 .light .hero-balance-card {
-  background: linear-gradient(145deg, #0b1329 0%, #111c38 50%, #080d1a 100%) !important;
-  border: 1px solid rgba(56, 189, 248, 0.28) !important;
-  box-shadow: 0 16px 36px -8px rgba(2, 6, 23, 0.35), 
-              inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+  background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.35), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
 }
 
 .purple-hero-card,
@@ -233,35 +233,35 @@ html::-webkit-scrollbar-thumb:hover {
   color: #ffffff !important;
 }
 
-/* 100% Tiniq va Yuqori Kontrastli Kirim va Chiqim Qutilari */
+/* 100% Ajratilgan Yashil (Kirim) va Qizil (Chiqim) Bloklari */
 .hero-income-box {
-  background: linear-gradient(145deg, #032d22 0%, #021f17 100%) !important;
-  border: 1.5px solid #10b981 !important;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.28) !important;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  border: 1.5px solid #34d399 !important;
+  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35) !important;
 }
 
 .hero-expense-box {
-  background: linear-gradient(145deg, #3d0c18 0%, #26060e 100%) !important;
-  border: 1.5px solid #f43f5e !important;
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.28) !important;
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+  border: 1.5px solid #fb7185 !important;
+  box-shadow: 0 6px 18px rgba(225, 29, 72, 0.35) !important;
 }
 
 .hero-income-box span {
-  color: #a7f3d0 !important;
+  color: #ecfdf5 !important;
 }
 
 .hero-income-box div,
 .hero-income-box #heroIncomeTotal {
-  color: #34d399 !important;
+  color: #ffffff !important;
 }
 
 .hero-expense-box span {
-  color: #fecdd3 !important;
+  color: #fff1f2 !important;
 }
 
 .hero-expense-box div,
 .hero-expense-box #heroExpenseTotal {
-  color: #fb7185 !important;
+  color: #ffffff !important;
 }
 
 /* Bottom Bar Dock */
