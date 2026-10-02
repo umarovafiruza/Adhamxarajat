@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Maxsus CSS Fayli -->
-  <link rel="stylesheet" href="style.css?v=20261002-v4">
+  <link rel="stylesheet" href="style.css?v=20261002-v5">
 
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -783,8 +783,8 @@
           </button>
 
           <!-- 3. MARKAZIY QO'SHISH TUGMASI (+) -->
-          <button onclick="openExpenseModal()" class="touch-btn flex flex-col items-center justify-center transition-all p-1 -mt-4 group" title="Qo'shish">
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-pink-500 text-white flex items-center justify-center shadow-lg shadow-purple-600/40 ring-4 ring-[#090717] group-hover:scale-105 transition-all">
+          <button onclick="openExpenseModal()" class="touch-btn flex flex-col items-center justify-center p-1 -mt-4 active:scale-95 transition-transform duration-100" title="Qo'shish">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-pink-500 text-white flex items-center justify-center shadow-lg shadow-purple-600/40 ring-4 ring-[#090717]">
               <i class="fa-solid fa-plus text-lg font-black"></i>
             </div>
             <span class="text-[10px] font-extrabold text-purple-300 mt-0.5">Kiritish</span>
@@ -815,7 +815,7 @@
   <!-- ========================================================
        MODAL 1: YANGI AMALIYOT QO'SHISH (BOTTOM SHEET UX)
        ======================================================== -->
-  <div id="expenseModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+  <div id="expenseModal" class="hidden fixed inset-0 z-50 bg-[#06040f]/80 flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-[#15102d] text-white w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl border-t sm:border border-purple-500/25 space-y-4 animate-slide-up safe-bottom">
       
       <!-- Grabber bar -->
@@ -918,7 +918,7 @@
   <!-- ========================================================
        MODAL 2: TASDIQLASH OYNASI (CONFIRM MODAL)
        ======================================================== -->
-  <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-all">
+  <div id="confirmModal" class="hidden fixed inset-0 z-50 bg-[#06040f]/80 flex items-center justify-center p-4">
     <div class="bg-[#181136] text-white border border-purple-500/25 w-full max-w-sm rounded-3xl p-6 shadow-2xl space-y-4 text-center animate-pop-in">
       
       <div id="confirmIconBox" class="w-14 h-14 rounded-2xl bg-rose-500/15 text-rose-500 border border-rose-500/25 flex items-center justify-center text-xl mx-auto shadow-lg shadow-rose-500/10">
@@ -949,7 +949,7 @@
   <!-- ========================================================
        MODAL 3: ISMNI TAHRIRLASH (EDIT NAME MODAL)
        ======================================================== -->
-  <div id="editNameModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 transition-all">
+  <div id="editNameModal" class="hidden fixed inset-0 z-50 bg-[#06040f]/80 flex items-center justify-center p-4">
     <div class="bg-[#181136] text-white border border-purple-500/25 w-full max-w-sm rounded-3xl p-5 shadow-2xl space-y-4 animate-pop-in">
       
       <div class="flex items-center justify-between">
@@ -988,7 +988,7 @@
   <!-- ========================================================
        MODAL 4: OYLIK BUDJETNI SOZLASH (BOTTOM SHEET UX)
        ======================================================== -->
-  <div id="budgetModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+  <div id="budgetModal" class="hidden fixed inset-0 z-50 bg-[#06040f]/80 flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-[#15102d] text-white w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl border-t sm:border border-purple-500/25 space-y-4 animate-slide-up safe-bottom">
       
       <!-- Grabber bar -->
@@ -1051,7 +1051,7 @@
        MODAL 5: OYNI TANLASH BOTTOM SHEET (MONTH PICKER MODAL)
        Barcha oylarni (Sentyabr, Avgust, Iyul...) tanlash
        ======================================================== -->
-  <div id="monthPickerModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+  <div id="monthPickerModal" class="hidden fixed inset-0 z-50 bg-[#06040f]/80 flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-[#15102d] text-white w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl border-t sm:border border-purple-500/25 space-y-4 animate-slide-up safe-bottom">
       
       <!-- Grabber bar -->

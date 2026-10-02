@@ -823,7 +823,6 @@ function openMonthPickerModal() {
   const modal = document.getElementById('monthPickerModal');
   if (modal) {
     modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
     updateTelegramBackButton();
   }
 }
@@ -833,7 +832,6 @@ function closeMonthPickerModal() {
   const modal = document.getElementById('monthPickerModal');
   if (modal) {
     modal.classList.add('hidden');
-    document.body.style.overflow = '';
     updateTelegramBackButton();
   }
 }
@@ -1106,18 +1104,24 @@ function setModalType(type) {
 }
 
 function openExpenseModal(type = 'expense') {
-  triggerHaptic('medium');
+  triggerHaptic('light');
   setModalType(type);
   const modal = document.getElementById('expenseModal');
   if (modal) {
     setDefaultDate();
     modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
     updateTelegramBackButton();
+    // Modal animatsiyasi (220ms) to'liq, silliq tugagandan keyin klaviaturani ochish
     setTimeout(() => {
       const amountInput = document.getElementById('amountInput');
-      if (amountInput) amountInput.focus();
-    }, 150);
+      if (amountInput) {
+        try {
+          amountInput.focus({ preventScroll: true });
+        } catch (e) {
+          amountInput.focus();
+        }
+      }
+    }, 260);
   }
 }
 
@@ -1126,13 +1130,12 @@ function closeExpenseModal() {
   const modal = document.getElementById('expenseModal');
   if (modal) {
     modal.classList.add('hidden');
-    document.body.style.overflow = '';
     updateTelegramBackButton();
   }
 }
 
 function openBudgetModal() {
-  triggerHaptic('medium');
+  triggerHaptic('light');
   const modal = document.getElementById('budgetModal');
   const input = document.getElementById('budgetInput');
   if (input) {
@@ -1140,11 +1143,16 @@ function openBudgetModal() {
   }
   if (modal) {
     modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
     updateTelegramBackButton();
     setTimeout(() => {
-      if (input) input.focus();
-    }, 150);
+      if (input) {
+        try {
+          input.focus({ preventScroll: true });
+        } catch (e) {
+          input.focus();
+        }
+      }
+    }, 260);
   }
 }
 
@@ -1153,7 +1161,6 @@ function closeBudgetModal() {
   const modal = document.getElementById('budgetModal');
   if (modal) {
     modal.classList.add('hidden');
-    document.body.style.overflow = '';
     updateTelegramBackButton();
   }
 }
@@ -1200,7 +1207,6 @@ function openCustomConfirm({ title, desc, icon, actionText, actionClass, onConfi
 
   const modal = document.getElementById('confirmModal');
   modal.classList.remove('hidden');
-  document.body.style.overflow = 'hidden';
   updateTelegramBackButton();
 }
 
@@ -1209,7 +1215,6 @@ function closeConfirmModal() {
   const modal = document.getElementById('confirmModal');
   if (modal) {
     modal.classList.add('hidden');
-    document.body.style.overflow = '';
     updateTelegramBackButton();
   }
   pendingConfirmAction = null;
