@@ -43,8 +43,8 @@ let selectedPeriod = 'this_month'; // 'this_month', 'today', 'all'
 let selectedAnalyticsPeriod = 'this_month'; // 'this_month', 'today', 'all'
 let searchQuery = '';
 let currentTab = 'home'; // 'home', 'history', 'analytics', 'profile'
-let userName = 'Atxambek';
-let userTag = '@atxambek';
+let userName = '';
+let userTag = '';
 let pendingConfirmAction = null;
 
 // Oylarni boshqarish holati (Sentyabr, Avgust, Iyul...)
@@ -390,11 +390,13 @@ async function syncFromCloud(silent = false) {
     }
 
     // 5. Foydalanuvchi ismi va tegi
-    if (cloudUserName) {
+    if (cloudUserName && cloudUserName !== 'Atxambek' && cloudUserName !== 'Foydalanuvchi') {
       userName = cloudUserName;
       localStorage.setItem('personal_expenses_username', userName);
+      localStorage.setItem('personal_user_registered', 'true');
+      closeEditNameModal();
     }
-    if (cloudUserTag) {
+    if (cloudUserTag && cloudUserTag !== '@atxambek' && cloudUserTag !== '@foydalanuvchi') {
       userTag = cloudUserTag;
       localStorage.setItem('personal_expenses_usertag', userTag);
     }
@@ -489,26 +491,32 @@ function initTelegramApp() {
       tg.setBackgroundColor('#090717');
     } catch (e) {}
 
-    // Telegram foydalanuvchisini avtomatik aniqlash
+    // Telegram foydalanuvchisini aniqlash va yangi foydalanuvchini ro'yxatga olish
+    const isRegistered = localStorage.getItem('personal_user_registered');
+    const savedName = localStorage.getItem('personal_expenses_username');
+
     if (tg.initDataUnsafe?.user) {
       const u = tg.initDataUnsafe.user;
       const fullName = [u.first_name, u.last_name].filter(Boolean).join(' ');
-      const savedName = localStorage.getItem('personal_expenses_username');
-      const savedTag = localStorage.getItem('personal_expenses_usertag');
 
-      if (fullName && (!savedName || savedName === 'Atxambek')) {
-        userName = fullName;
-        localStorage.setItem('personal_expenses_username', userName);
-        if (TelegramCloud.isAvailable()) {
-          TelegramCloud.setItem('personal_expenses_username', userName);
-        }
+      if (isRegistered && savedName && savedName !== 'Atxambek' && savedName !== 'Foydalanuvchi') {
+        userName = savedName;
+      } else {
+        // Yangi foydalanuvchi: Telegram ma'lumotlarini tayyorlab qo'yamiz va modal orqali so'raymiz
+        if (fullName) userName = fullName;
+        if (u.username) userTag = `@${u.username}`;
+        setTimeout(() => {
+          openEditNameModal(true); // Ism va familiyani kiritish/tasdiqlash oynasi
+        }, 350);
       }
-      if (u.username && (!savedTag || savedTag === '@atxambek')) {
-        userTag = `@${u.username}`;
-        localStorage.setItem('personal_expenses_usertag', userTag);
-        if (TelegramCloud.isAvailable()) {
-          TelegramCloud.setItem('personal_expenses_usertag', userTag);
-        }
+      updateUserDisplay();
+    } else {
+      if (isRegistered && savedName && savedName !== 'Atxambek' && savedName !== 'Foydalanuvchi') {
+        userName = savedName;
+      } else {
+        setTimeout(() => {
+          openEditNameModal(true);
+        }, 350);
       }
       updateUserDisplay();
     }
@@ -622,8 +630,12 @@ function setDefaultDate() {
 function loadUserData() {
   const savedName = localStorage.getItem('personal_expenses_username');
   const savedTag = localStorage.getItem('personal_expenses_usertag');
-  if (savedName) userName = savedName;
-  if (savedTag) userTag = savedTag;
+  if (savedName && savedName !== 'Atxambek' && savedName !== 'Foydalanuvchi') {
+    userName = savedName;
+  }
+  if (savedTag && savedTag !== '@atxambek' && savedTag !== '@foydalanuvchi') {
+    userTag = savedTag;
+  }
   updateUserDisplay();
 }
 
@@ -632,9 +644,12 @@ function updateUserDisplay() {
   const cardName = document.getElementById('profileCardName');
   const cardTag = document.getElementById('profileCardTag');
 
-  if (headerName) headerName.textContent = userName;
-  if (cardName) cardName.textContent = userName;
-  if (cardTag) cardTag.textContent = userTag.startsWith('@') ? userTag : `@${userTag}`;
+  const displayName = userName || 'Foydalanuvchi';
+  const displayTag = userTag ? (userTag.startsWith('@') ? userTag : `@${userTag}`) : '@foydalanuvchi';
+
+  if (headerName) headerName.textContent = displayName;
+  if (cardName) cardName.textContent = displayName;
+  if (cardTag) cardTag.textContent = displayTag;
 }
 
 function loadBudgetFromStorage() {
@@ -1220,16 +1235,77 @@ function closeConfirmModal() {
   pendingConfirmAction = null;
 }
 
-function openEditNameModal() {
+let isWelcomeRegistration = false;
+
+function openEditNameModal(isWelcome = false) {
   triggerHaptic('light');
+  isWelcomeRegistration = isWelcome;
   const modal = document.getElementById('editNameModal');
+  const titleText = document.getElementById('editNameModalTitleText');
+  const icon = document.getElementById('editNameModalIcon');
+  const subtitle = document.getElementById('editNameModalSubtitle');
+  const closeBtn = document.getElementById('closeEditNameModalBtn');
+  const cancelBtn = document.getElementById('cancelEditNameBtn');
+  const saveBtn = document.getElementById('saveUserNameBtn');
+  const buttonsContainer = document.getElementById('editNameButtonsContainer');
   const nameInput = document.getElementById('editNameInput');
   const tagInput = document.getElementById('editTagInput');
-  if (nameInput) nameInput.value = userName;
-  if (tagInput) tagInput.value = userTag.replace('@', '');
+
+  const tgUser = TelegramCloud.getUser();
+  const tgFullName = tgUser ? [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ') : '';
+  const tgTag = tgUser?.username ? `@${tgUser.username}` : '';
+
+  if (isWelcome) {
+    if (titleText) titleText.textContent = "Xush kelibsiz! 👋";
+    if (icon) icon.className = "fa-solid fa-hand-wave text-amber-400";
+    if (subtitle) {
+      subtitle.classList.remove('hidden');
+      subtitle.textContent = "Ilovadan foydalanish uchun ism va familiyangizni kiriting:";
+    }
+    if (closeBtn) closeBtn.classList.add('hidden');
+    if (cancelBtn) cancelBtn.classList.add('hidden');
+    if (buttonsContainer) buttonsContainer.className = "pt-1";
+    if (saveBtn) {
+      saveBtn.className = "touch-btn w-full h-11 text-xs font-bold rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 active:scale-95 text-white shadow-lg shadow-purple-600/30 transition flex items-center justify-center gap-1.5";
+      saveBtn.innerHTML = '<span>Boshlash</span> <i class="fa-solid fa-arrow-right text-[11px]"></i>';
+    }
+
+    if (nameInput) {
+      nameInput.value = tgFullName || (userName && userName !== 'Foydalanuvchi' ? userName : '') || '';
+      nameInput.placeholder = "Ism va familiyangiz (Masalan: Adham Umarov)";
+    }
+    if (tagInput) {
+      tagInput.value = tgTag || (userTag && userTag !== '@foydalanuvchi' ? userTag.replace('@', '') : '');
+      tagInput.placeholder = "Masalan: adham...";
+    }
+  } else {
+    if (titleText) titleText.textContent = "Ismni o'zgartirish";
+    if (icon) icon.className = "fa-solid fa-user-pen text-purple-400";
+    if (subtitle) subtitle.classList.add('hidden');
+    if (closeBtn) closeBtn.classList.remove('hidden');
+    if (cancelBtn) cancelBtn.classList.remove('hidden');
+    if (buttonsContainer) buttonsContainer.className = "grid grid-cols-2 gap-2 pt-1";
+    if (saveBtn) {
+      saveBtn.className = "touch-btn h-11 text-xs font-bold rounded-xl bg-purple-600 hover:bg-purple-500 active:scale-95 text-white shadow-md shadow-purple-600/30 transition";
+      saveBtn.innerHTML = 'Saqlash';
+    }
+
+    if (nameInput) nameInput.value = (userName && userName !== 'Foydalanuvchi' ? userName : '') || '';
+    if (tagInput) tagInput.value = (userTag && userTag !== '@foydalanuvchi' ? userTag.replace('@', '') : '') || '';
+  }
+
   if (modal) {
     modal.classList.remove('hidden');
     updateTelegramBackButton();
+    setTimeout(() => {
+      if (nameInput) {
+        try {
+          nameInput.focus({ preventScroll: true });
+        } catch (e) {
+          nameInput.focus();
+        }
+      }
+    }, 250);
   }
 }
 
@@ -1242,33 +1318,50 @@ function closeEditNameModal() {
   }
 }
 
+function handleUserNameSubmit(e) {
+  if (e) e.preventDefault();
+  saveUserName();
+}
+
 function saveUserName() {
   const nameInput = document.getElementById('editNameInput');
   const tagInput = document.getElementById('editTagInput');
   const newName = nameInput ? nameInput.value.trim() : '';
   const newTag = tagInput ? tagInput.value.trim() : '';
 
-  if (newName) {
-    triggerHaptic('success');
-    userName = newName;
-    userTag = newTag ? (newTag.startsWith('@') ? newTag : `@${newTag}`) : `@${newName.toLowerCase().replace(/\s+/g, '')}`;
-    try {
-      localStorage.setItem('personal_expenses_username', userName);
-      localStorage.setItem('personal_expenses_usertag', userTag);
-    } catch (e) {}
-
-    if (TelegramCloud.isAvailable()) {
-      TelegramCloud.setItem('personal_expenses_username', userName);
-      TelegramCloud.setItem('personal_expenses_usertag', userTag).then(() => {
-        lastSyncTimestamp = new Date();
-        updateCloudUIStatus('synced');
-      });
-    }
-
-    updateUserDisplay();
-    closeEditNameModal();
-    showToast('Profil ma\'lumotlari yangilandi!');
+  if (!newName) {
+    showToast('Iltimos, ismingizni kiriting!', 'warning');
+    return;
   }
+
+  triggerHaptic('success');
+  userName = newName;
+  userTag = newTag ? (newTag.startsWith('@') ? newTag : `@${newTag}`) : `@${newName.toLowerCase().replace(/\s+/g, '')}`;
+
+  try {
+    localStorage.setItem('personal_expenses_username', userName);
+    localStorage.setItem('personal_expenses_usertag', userTag);
+    localStorage.setItem('personal_user_registered', 'true');
+  } catch (e) {}
+
+  if (TelegramCloud.isAvailable()) {
+    TelegramCloud.setItem('personal_expenses_username', userName);
+    TelegramCloud.setItem('personal_expenses_usertag', userTag);
+    TelegramCloud.setItem('personal_user_registered', 'true').then(() => {
+      lastSyncTimestamp = new Date();
+      updateCloudUIStatus('synced');
+    });
+  }
+
+  updateUserDisplay();
+  closeEditNameModal();
+
+  if (isWelcomeRegistration) {
+    showToast(`Xush kelibsiz, ${userName}!`, 'success');
+  } else {
+    showToast('Profil ma\'lumotlari yangilandi!', 'success');
+  }
+  isWelcomeRegistration = false;
 }
 
 // ==========================================
