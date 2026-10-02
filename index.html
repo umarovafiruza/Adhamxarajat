@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Maxsus CSS Fayli -->
-  <link rel="stylesheet" href="style.css?v=20261002-v3">
+  <link rel="stylesheet" href="style.css?v=20261002-v4">
 
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -85,8 +85,9 @@
               <span class="text-[10px] font-semibold text-purple-300/80 leading-none">Moliya nazorati</span>
               <span class="text-[8px] font-black uppercase px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 border border-purple-400/20">Mini App</span>
             </div>
-            <h1 id="headerUserName" class="text-xs sm:text-sm font-extrabold tracking-tight text-white leading-tight mt-0.5">
-              Atxambek
+            <h1 class="text-xs sm:text-sm font-extrabold tracking-tight text-white leading-tight mt-0.5 flex items-center gap-1.5">
+              <span id="headerUserName">Atxambek</span>
+              <i class="fa-solid fa-cloud text-[10px] text-sky-400" title="Telegram Bulut"></i>
             </h1>
           </div>
         </div>
@@ -614,6 +615,40 @@
             </button>
           </div>
 
+        </div>
+
+        <!-- TELEGRAM BULUT SINXRONIZATSIYASI (CROSS-DEVICE SYNC) -->
+        <div class="glass-card rounded-2xl p-3.5 space-y-2.5 border border-sky-500/25 bg-gradient-to-r from-sky-950/20 via-[#181136]/50 to-indigo-950/20">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-sm shadow-md shrink-0">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <h4 class="text-xs font-bold text-white">Telegram Bulut</h4>
+                  <span id="cloudStatusBadge" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-950/80 text-emerald-400 border border-emerald-400/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Sinxron
+                  </span>
+                </div>
+                <p id="cloudUserIdText" class="text-[10px] text-slate-400 truncate mt-0.5">Barcha qurilmalarda bir xil saqlanadi</p>
+              </div>
+            </div>
+            
+            <button id="btnManualSync" onclick="manualSyncWithCloud()" class="touch-btn px-2.5 py-1.5 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 text-sky-200 border border-sky-400/30 text-xs font-bold flex items-center gap-1.5 active:scale-95 transition shrink-0 ml-2" title="Bulutdan yangilash">
+              <i id="btnManualSyncIcon" class="fa-solid fa-rotate text-[11px]"></i>
+              <span class="text-[11px]">Yangilash</span>
+            </button>
+          </div>
+          
+          <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-purple-500/15">
+            <span>Oxirgi sinxron: <strong id="lastSyncTimeText" class="text-slate-300">Hozirgina</strong></span>
+            <span id="cloudAccountStatusText" class="text-sky-300 font-semibold flex items-center gap-1">
+              <i class="fa-brands fa-telegram text-xs text-sky-400"></i>
+              Telegram ID orqali
+            </span>
+          </div>
         </div>
 
         <!-- 2 TA KO'RSATKICH KARTASI -->

@@ -54,7 +54,427 @@ let selectedMonth = nowInitial.getMonth() + 1; // 1 dan 12 gacha, yoki null (bar
 let pickerYear = selectedYear;
 
 // ==========================================
-// 2.1 TELEGRAM MINI APP (TMA) INTEGRATSIYASI
+// 2.1 TELEGRAM CLOUD STORAGE & CROSS-DEVICE SYNC
+// (Telegram ID orqali barcha qurilmalarda bir xil saqlash)
+// ==========================================
+const TelegramCloud = {
+  // Telegram CloudStorage mavjudligini tekshirish
+  isAvailable() {
+    return Boolean(
+      window.Telegram?.WebApp?.CloudStorage && 
+      typeof window.Telegram.WebApp.CloudStorage.setItem === 'function'
+    );
+  },
+
+  // Telegram User ID olish (faqat Telegram ichida ochilganda)
+  getUserId() {
+    return window.Telegram?.WebApp?.initDataUnsafe?.user?.id || null;
+  },
+
+  // Telegram User ma'lumotlarini olish
+  getUser() {
+    return window.Telegram?.WebApp?.initDataUnsafe?.user || null;
+  },
+
+  // Oddiy kalitni o'qish (Promise)
+  getItem(key) {
+    return new Promise((resolve) => {
+      if (!this.isAvailable()) {
+        resolve(localStorage.getItem(key));
+        return;
+      }
+      try {
+        window.Telegram.WebApp.CloudStorage.getItem(key, (err, val) => {
+          if (err || val === undefined || val === null) {
+            resolve(localStorage.getItem(key));
+          } else {
+            resolve(val);
+          }
+        });
+      } catch (e) {
+        resolve(localStorage.getItem(key));
+      }
+    });
+  },
+
+  // Bir nechta kalitlarni bir vaqtda o'qish (Promise)
+  getItems(keys) {
+    return new Promise((resolve) => {
+      if (!this.isAvailable()) {
+        const res = {};
+        keys.forEach(k => { res[k] = localStorage.getItem(k); });
+        resolve(res);
+        return;
+      }
+      try {
+        window.Telegram.WebApp.CloudStorage.getItems(keys, (err, values) => {
+          if (err || !values) {
+            const res = {};
+            keys.forEach(k => { res[k] = localStorage.getItem(k); });
+            resolve(res);
+          } else {
+            resolve(values);
+          }
+        });
+      } catch (e) {
+        const res = {};
+        keys.forEach(k => { res[k] = localStorage.getItem(k); });
+        resolve(res);
+      }
+    });
+  },
+
+  // Oddiy kalitni yozish (Promise)
+  setItem(key, value) {
+    return new Promise((resolve) => {
+      const strVal = String(value ?? '');
+      try { localStorage.setItem(key, strVal); } catch (e) {}
+
+      if (!this.isAvailable()) {
+        resolve(true);
+        return;
+      }
+      try {
+        window.Telegram.WebApp.CloudStorage.setItem(key, strVal, (err) => {
+          if (err) {
+            console.warn(`[CloudStorage] setItem(${key}) ogohlantirishi:`, err);
+            resolve(false);
+          } else {
+            resolve(true);
+          }
+        });
+      } catch (e) {
+        resolve(false);
+      }
+    });
+  },
+
+  // Kalitni o'chirish (Promise)
+  removeItem(key) {
+    return new Promise((resolve) => {
+      try { localStorage.removeItem(key); } catch (e) {}
+      if (!this.isAvailable()) {
+        resolve(true);
+        return;
+      }
+      try {
+        window.Telegram.WebApp.CloudStorage.removeItem(key, () => resolve(true));
+      } catch (e) {
+        resolve(false);
+      }
+    });
+  },
+
+  // Bir nechta kalitlarni o'chirish
+  removeItems(keys) {
+    return new Promise((resolve) => {
+      keys.forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+      if (!this.isAvailable() || !keys.length) {
+        resolve(true);
+        return;
+      }
+      try {
+        window.Telegram.WebApp.CloudStorage.removeItems(keys, () => resolve(true));
+      } catch (e) {
+        resolve(false);
+      }
+    });
+  },
+
+  // Katta hajmdagi JSON ma'lumotlarini (4096 baytdan ortiq bo'lsa) bo'laklarga (chunk) bo'lib saqlash
+  // Telegram CloudStorage chegarasi: har bir kalit qiymati <= 4096 bayt
+  async setLargeItem(key, fullString) {
+    const CHUNK_SIZE = 3500;
+    try {
+      localStorage.setItem(key, fullString);
+    } catch (e) {}
+
+    if (!this.isAvailable()) return true;
+
+    try {
+      const totalLen = fullString.length;
+      const numChunks = Math.ceil(totalLen / CHUNK_SIZE) || 1;
+
+      // Oldingi chunklar sonini bilish (keraksiz eski chunklarni tozalash uchun)
+      const prevCountStr = await this.getItem(`${key}_chunks_count`);
+      const prevCount = parseInt(prevCountStr, 10) || 0;
+
+      // Yangi chunklarni yozish
+      const writePromises = [];
+      writePromises.push(this.setItem(`${key}_chunks_count`, String(numChunks)));
+
+      for (let i = 0; i < numChunks; i++) {
+        const chunk = fullString.substr(i * CHUNK_SIZE, CHUNK_SIZE);
+        writePromises.push(this.setItem(`${key}_chunk_${i}`, chunk));
+      }
+
+      await Promise.all(writePromises);
+
+      // Agar oldingi chunklar yangisidan ko'p bo'lsa, qolganlarini tozalaymiz
+      if (prevCount > numChunks) {
+        const toRemove = [];
+        for (let j = numChunks; j < prevCount; j++) {
+          toRemove.push(`${key}_chunk_${j}`);
+        }
+        await this.removeItems(toRemove);
+      }
+
+      return true;
+    } catch (e) {
+      console.warn(`[CloudStorage] setLargeItem xatosi:`, e);
+      return false;
+    }
+  },
+
+  // Katta hajmdagi ma'lumotni bo'laklardan yig'ib olish
+  async getLargeItem(key) {
+    if (!this.isAvailable()) {
+      return localStorage.getItem(key);
+    }
+
+    try {
+      // 1. Chunklar sonini tekshiramiz
+      const countStr = await this.getItem(`${key}_chunks_count`);
+      const numChunks = parseInt(countStr, 10);
+
+      // Agar chunklar soni mavjud bo'lsa, barcha chunklarni o'qiymiz
+      if (!isNaN(numChunks) && numChunks > 0) {
+        const chunkKeys = [];
+        for (let i = 0; i < numChunks; i++) {
+          chunkKeys.push(`${key}_chunk_${i}`);
+        }
+
+        const chunksObj = await this.getItems(chunkKeys);
+        let fullResult = '';
+        for (let i = 0; i < numChunks; i++) {
+          const part = chunksObj[`${key}_chunk_${i}`] || '';
+          fullResult += part;
+        }
+
+        if (fullResult) {
+          try { localStorage.setItem(key, fullResult); } catch (e) {}
+          return fullResult;
+        }
+      }
+
+      // 2. Agar chunk tizimida topilmasa, to'g'ridan-to'g'ri kalit orqali tekshirish (legacy)
+      const directVal = await this.getItem(key);
+      if (directVal) {
+        try { localStorage.setItem(key, directVal); } catch (e) {}
+        return directVal;
+      }
+
+      // 3. Bulutda topilmasa, lokal keshdan olish
+      return localStorage.getItem(key);
+    } catch (e) {
+      console.warn(`[CloudStorage] getLargeItem xatosi:`, e);
+      return localStorage.getItem(key);
+    }
+  }
+};
+
+let isCloudSyncing = false;
+let lastSyncTimestamp = null;
+
+// UI holatini yangilash (Profil sahifasidagi sinxronizatsiya bloki)
+function updateCloudUIStatus(status) {
+  const badge = document.getElementById('cloudStatusBadge');
+  const userText = document.getElementById('cloudUserIdText');
+  const timeText = document.getElementById('lastSyncTimeText');
+  const accountStatus = document.getElementById('cloudAccountStatusText');
+
+  const u = TelegramCloud.getUser();
+
+  if (badge) {
+    if (status === 'synced') {
+      badge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-950/80 text-emerald-400 border border-emerald-400/30';
+      badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Sinxron';
+    } else if (status === 'syncing') {
+      badge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-950/80 text-sky-400 border border-sky-400/30';
+      badge.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-[10px]"></i> Yangilanmoqda...';
+    } else if (status === 'local') {
+      badge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-slate-800 text-slate-300 border border-slate-600/30';
+      badge.innerHTML = 'Lokal rejim';
+    } else if (status === 'error') {
+      badge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-950/80 text-rose-400 border border-rose-400/30';
+      badge.innerHTML = 'Ulanmadi';
+    }
+  }
+
+  if (userText) {
+    if (u && u.id) {
+      userText.textContent = `Telegram ID: ${u.id} (${u.first_name || ''})`;
+    } else if (TelegramCloud.isAvailable()) {
+      userText.textContent = 'Telegram Bulut xotirasi ulangan';
+    } else {
+      userText.textContent = 'Lokal brauzer xotirasi (Telegram tashqarisida)';
+    }
+  }
+
+  if (timeText) {
+    if (lastSyncTimestamp) {
+      const hh = String(lastSyncTimestamp.getHours()).padStart(2, '0');
+      const mm = String(lastSyncTimestamp.getMinutes()).padStart(2, '0');
+      timeText.textContent = `Bugun ${hh}:${mm}`;
+    } else {
+      timeText.textContent = 'Hozirgina';
+    }
+  }
+
+  if (accountStatus) {
+    if (u && u.id) {
+      accountStatus.innerHTML = `<i class="fa-brands fa-telegram text-xs text-sky-400"></i> ID: ${u.id}`;
+    } else if (TelegramCloud.isAvailable()) {
+      accountStatus.innerHTML = `<i class="fa-solid fa-cloud text-xs text-sky-400"></i> Telegram Bulut`;
+    } else {
+      accountStatus.innerHTML = `<i class="fa-solid fa-hard-drive text-xs text-slate-400"></i> Lokal xotira`;
+    }
+  }
+}
+
+// Bulutdan ma'lumotlarni o'qish va sinxronlashtirish
+async function syncFromCloud(silent = false) {
+  if (isCloudSyncing) return;
+  isCloudSyncing = true;
+  updateCloudUIStatus('syncing');
+
+  try {
+    if (!TelegramCloud.isAvailable()) {
+      updateCloudUIStatus('local');
+      isCloudSyncing = false;
+      return;
+    }
+
+    // 1. Bulutdan asosiy kalitlarni parallel o'qish
+    const [cloudExpensesStr, cloudBudgetStr, cloudUserName, cloudUserTag, cloudTheme] = await Promise.all([
+      TelegramCloud.getLargeItem('personal_expenses_v2'),
+      TelegramCloud.getItem('personal_monthly_budget'),
+      TelegramCloud.getItem('personal_expenses_username'),
+      TelegramCloud.getItem('personal_expenses_usertag'),
+      TelegramCloud.getItem('personal_expenses_theme')
+    ]);
+
+    const hasCloudExpenses = Boolean(cloudExpensesStr && cloudExpensesStr.trim() !== '' && cloudExpensesStr !== '[]');
+    const localExpensesStr = localStorage.getItem('personal_expenses_v2');
+    const hasLocalExpenses = Boolean(localExpensesStr && localExpensesStr.trim() !== '' && localExpensesStr !== '[]');
+
+    // 2. AVTO-MIGRATSIYA: Agar bulutda hali xarajatlar yo'q bo'lsa, lekin joriy telefonda mavjud bo'lsa
+    if (!hasCloudExpenses && hasLocalExpenses) {
+      await autoMigrateLocalDataToCloud();
+      lastSyncTimestamp = new Date();
+      updateCloudUIStatus('synced');
+      isCloudSyncing = false;
+      return;
+    }
+
+    // 3. Agar bulutda xarajatlar mavjud bo'lsa -> Ushbu qurilma xotirasini yangilash
+    if (hasCloudExpenses) {
+      try {
+        const parsed = JSON.parse(cloudExpensesStr);
+        if (Array.isArray(parsed)) {
+          expenses = parsed;
+          localStorage.setItem('personal_expenses_v2', cloudExpensesStr);
+        }
+      } catch (e) {
+        console.error('Bulutdagi xarajatlar JSON xatosi:', e);
+      }
+    }
+
+    // 4. Oylik budjet
+    if (cloudBudgetStr) {
+      const parsedBudget = parseFloat(cloudBudgetStr);
+      if (!isNaN(parsedBudget) && parsedBudget > 0) {
+        monthlyBudget = parsedBudget;
+        localStorage.setItem('personal_monthly_budget', cloudBudgetStr);
+      }
+    }
+
+    // 5. Foydalanuvchi ismi va tegi
+    if (cloudUserName) {
+      userName = cloudUserName;
+      localStorage.setItem('personal_expenses_username', userName);
+    }
+    if (cloudUserTag) {
+      userTag = cloudUserTag;
+      localStorage.setItem('personal_expenses_usertag', userTag);
+    }
+
+    // 6. Mavzu (Theme)
+    if (cloudTheme && (cloudTheme === 'dark' || cloudTheme === 'light')) {
+      const isDark = (cloudTheme === 'dark');
+      applyTheme(isDark);
+      localStorage.setItem('personal_expenses_theme', cloudTheme);
+    }
+
+    lastSyncTimestamp = new Date();
+    updateUserDisplay();
+    renderAll();
+    updateCloudUIStatus('synced');
+
+    if (!silent) {
+      triggerHaptic('success');
+      showToast('Telegram buluti bilan sinxronlandi!', 'success');
+    }
+  } catch (err) {
+    console.error('syncFromCloud xatosi:', err);
+    updateCloudUIStatus('error');
+    if (!silent) {
+      showToast('Sinxronlashda xatolik yuz berdi', 'error');
+    }
+  } finally {
+    isCloudSyncing = false;
+  }
+}
+
+// Lokal ma'lumotlarni Telegram CloudStorage'ga avtomatik yuklash (birinchi marta)
+async function autoMigrateLocalDataToCloud() {
+  try {
+    const promises = [];
+    const localExp = localStorage.getItem('personal_expenses_v2') || JSON.stringify(expenses);
+    const localBud = localStorage.getItem('personal_monthly_budget') || monthlyBudget.toString();
+    const localName = localStorage.getItem('personal_expenses_username') || userName;
+    const localTag = localStorage.getItem('personal_expenses_usertag') || userTag;
+    const localTheme = localStorage.getItem('personal_expenses_theme') || (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+
+    promises.push(TelegramCloud.setLargeItem('personal_expenses_v2', localExp));
+    promises.push(TelegramCloud.setItem('personal_monthly_budget', localBud));
+    promises.push(TelegramCloud.setItem('personal_expenses_username', localName));
+    promises.push(TelegramCloud.setItem('personal_expenses_usertag', localTag));
+    promises.push(TelegramCloud.setItem('personal_expenses_theme', localTheme));
+
+    await Promise.all(promises);
+    lastSyncTimestamp = new Date();
+  } catch (e) {
+    console.error('[CloudStorage] autoMigrateLocalDataToCloud xatosi:', e);
+  }
+}
+
+// Profil sahifasidagi "Yangilash" tugmasi
+async function manualSyncWithCloud() {
+  const icon = document.getElementById('btnManualSyncIcon');
+  if (icon) icon.classList.add('fa-spin');
+  triggerHaptic('selection');
+  await syncFromCloud(false);
+  setTimeout(() => {
+    if (icon) icon.classList.remove('fa-spin');
+  }, 600);
+}
+
+// Ilovaga qaytganda yoki boshqa ilovadan o'tganda avtomatik yangilash
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && TelegramCloud.isAvailable()) {
+    syncFromCloud(true);
+  }
+});
+
+window.addEventListener('focus', () => {
+  if (TelegramCloud.isAvailable()) {
+    syncFromCloud(true);
+  }
+});
+
+// ==========================================
+// 2.2 TELEGRAM MINI APP (TMA) INTEGRATSIYASI
 // ==========================================
 function initTelegramApp() {
   if (window.Telegram?.WebApp) {
@@ -79,10 +499,16 @@ function initTelegramApp() {
       if (fullName && (!savedName || savedName === 'Atxambek')) {
         userName = fullName;
         localStorage.setItem('personal_expenses_username', userName);
+        if (TelegramCloud.isAvailable()) {
+          TelegramCloud.setItem('personal_expenses_username', userName);
+        }
       }
       if (u.username && (!savedTag || savedTag === '@atxambek')) {
         userTag = `@${u.username}`;
         localStorage.setItem('personal_expenses_usertag', userTag);
+        if (TelegramCloud.isAvailable()) {
+          TelegramCloud.setItem('personal_expenses_usertag', userTag);
+        }
       }
       updateUserDisplay();
     }
@@ -98,6 +524,11 @@ function initTelegramApp() {
       });
       updateTelegramBackButton();
     }
+
+    // Bulut xotirasi bilan sinxronizatsiyani darhol boshlash
+    syncFromCloud(true);
+  } else {
+    updateCloudUIStatus('local');
   }
 }
 
@@ -217,7 +648,17 @@ function loadBudgetFromStorage() {
 }
 
 function saveBudget() {
-  localStorage.setItem('personal_monthly_budget', monthlyBudget.toString());
+  const budStr = monthlyBudget.toString();
+  try {
+    localStorage.setItem('personal_monthly_budget', budStr);
+  } catch (e) {}
+
+  if (TelegramCloud.isAvailable()) {
+    TelegramCloud.setItem('personal_monthly_budget', budStr).then(() => {
+      lastSyncTimestamp = new Date();
+      updateCloudUIStatus('synced');
+    });
+  }
 }
 
 function loadExpensesFromStorage() {
@@ -293,7 +734,17 @@ function loadExpensesFromStorage() {
 }
 
 function saveExpenses() {
-  localStorage.setItem('personal_expenses_v2', JSON.stringify(expenses));
+  const jsonStr = JSON.stringify(expenses);
+  try {
+    localStorage.setItem('personal_expenses_v2', jsonStr);
+  } catch (e) {}
+
+  if (TelegramCloud.isAvailable()) {
+    TelegramCloud.setLargeItem('personal_expenses_v2', jsonStr).then(() => {
+      lastSyncTimestamp = new Date();
+      updateCloudUIStatus('synced');
+    });
+  }
 }
 
 // ==========================================
@@ -545,7 +996,13 @@ function initTheme() {
 function toggleTheme() {
   const isDark = document.documentElement.classList.contains('dark');
   applyTheme(!isDark);
-  localStorage.setItem('personal_expenses_theme', !isDark ? 'dark' : 'light');
+  const theme = !isDark ? 'dark' : 'light';
+  try {
+    localStorage.setItem('personal_expenses_theme', theme);
+  } catch (e) {}
+  if (TelegramCloud.isAvailable()) {
+    TelegramCloud.setItem('personal_expenses_theme', theme);
+  }
 }
 
 function applyTheme(isDark) {
@@ -790,8 +1247,19 @@ function saveUserName() {
     triggerHaptic('success');
     userName = newName;
     userTag = newTag ? (newTag.startsWith('@') ? newTag : `@${newTag}`) : `@${newName.toLowerCase().replace(/\s+/g, '')}`;
-    localStorage.setItem('personal_expenses_username', userName);
-    localStorage.setItem('personal_expenses_usertag', userTag);
+    try {
+      localStorage.setItem('personal_expenses_username', userName);
+      localStorage.setItem('personal_expenses_usertag', userTag);
+    } catch (e) {}
+
+    if (TelegramCloud.isAvailable()) {
+      TelegramCloud.setItem('personal_expenses_username', userName);
+      TelegramCloud.setItem('personal_expenses_usertag', userTag).then(() => {
+        lastSyncTimestamp = new Date();
+        updateCloudUIStatus('synced');
+      });
+    }
+
     updateUserDisplay();
     closeEditNameModal();
     showToast('Profil ma\'lumotlari yangilandi!');
@@ -883,9 +1351,13 @@ function confirmResetData() {
     icon: "fa-triangle-exclamation",
     actionText: "Ha, tozalash",
     actionClass: "touch-btn h-11 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white shadow-md shadow-rose-600/30 transition",
-    onConfirm: () => {
+    onConfirm: async () => {
       expenses = [];
       saveExpenses();
+      if (TelegramCloud.isAvailable()) {
+        await TelegramCloud.removeItem('personal_expenses_v2');
+        await TelegramCloud.removeItem('personal_expenses_v2_chunks_count');
+      }
       renderAll();
       showToast('Barcha ma\'lumotlar tozalandi', 'info');
     }
