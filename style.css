@@ -209,18 +209,49 @@ html::-webkit-scrollbar-thumb:hover {
   border: 1px solid rgba(226, 232, 240, 0.9);
 }
 
-/* FinTech binafsha gradient hero karta */
+/* FinTech Obsidian Hero Karta (Binafsha o'rniga zamonaviy to'q midnight-obsidian metall fon) */
 .purple-hero-card {
-  background: linear-gradient(140deg, #32165c 0%, #1e0e3d 55%, #130826 100%);
-  border: 1px solid rgba(168, 85, 247, 0.28);
-  box-shadow: 0 16px 36px -8px rgba(45, 14, 85, 0.55), 
-              inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  background: linear-gradient(145deg, #130e26 0%, #0d091d 55%, #080612 100%) !important;
+  border: 1px solid rgba(168, 85, 247, 0.25) !important;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
 }
 
 .light .purple-hero-card {
-  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
-  border: 1px solid rgba(124, 58, 237, 0.25);
-  box-shadow: 0 16px 36px -8px rgba(99, 102, 241, 0.35);
+  background: linear-gradient(145deg, #150f2c 0%, #0f0a22 55%, #090615 100%) !important;
+  border: 1px solid rgba(168, 85, 247, 0.25) !important;
+  box-shadow: 0 16px 36px -8px rgba(15, 10, 35, 0.25), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
+}
+
+.purple-hero-card,
+.purple-hero-card h2,
+.purple-hero-card h3,
+.purple-hero-card #totalBalanceHero {
+  color: #ffffff !important;
+}
+
+/* 100% Tiniq va Yuqori Kontrastli Kirim va Chiqim Qutilari */
+.hero-income-box {
+  background: #092318 !important;
+  border: 1px solid rgba(52, 211, 153, 0.45) !important;
+  box-shadow: 0 4px 14px rgba(6, 78, 59, 0.3) !important;
+}
+
+.hero-expense-box {
+  background: #280b15 !important;
+  border: 1px solid rgba(251, 113, 133, 0.45) !important;
+  box-shadow: 0 4px 14px rgba(159, 18, 57, 0.3) !important;
+}
+
+.hero-income-box span,
+.hero-income-box div#heroIncomeTotal {
+  color: #6ee7b7 !important;
+}
+
+.hero-expense-box span,
+.hero-expense-box div#heroExpenseTotal {
+  color: #fda4af !important;
 }
 
 /* Bottom Bar Dock */

@@ -1045,10 +1045,10 @@ function renderHomeTab() {
   if (heroBalStatus) {
     if (netBalance >= 0) {
       heroBalStatus.textContent = 'Ijobiy';
-      heroBalStatus.className = 'text-[10px] font-black text-emerald-400 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-400/25';
+      heroBalStatus.className = 'text-[10px] font-black text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-400/40 shadow-xs';
     } else {
       heroBalStatus.textContent = 'Kamomad';
-      heroBalStatus.className = 'text-[10px] font-black text-rose-400 bg-rose-500/20 px-2.5 py-0.5 rounded-full border border-rose-400/25';
+      heroBalStatus.className = 'text-[10px] font-black text-rose-300 bg-rose-950/80 px-2.5 py-0.5 rounded-full border border-rose-400/40 shadow-xs';
     }
   }
 
