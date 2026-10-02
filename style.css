@@ -173,6 +173,16 @@ html::-webkit-scrollbar-thumb:hover {
   animation: pulseGlow 4s ease-in-out infinite;
 }
 
+@keyframes shakeHorizontal {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-7px); }
+  40%, 80% { transform: translateX(7px); }
+}
+
+.animate-shake {
+  animation: shakeHorizontal 0.35s ease-in-out;
+}
+
 /* 3. MOBIL MOSLASHUV VA TOUCH STANDARTLARI */
 .safe-bottom {
   padding-bottom: max(env(safe-area-inset-bottom, 12px), 12px);

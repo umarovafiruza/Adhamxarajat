@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Maxsus CSS Fayli -->
-  <link rel="stylesheet" href="style.css?v=20261002-v6">
+  <link rel="stylesheet" href="style.css?v=20261002-v7">
 
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -971,7 +971,11 @@
           <label class="block text-xs font-bold text-purple-200 mb-1">
             Ism va Familiyangiz <span class="text-rose-400">*</span>
           </label>
-          <input type="text" id="editNameInput" required placeholder="Masalan: Adham Umarov" class="w-full h-11 px-3.5 rounded-xl bg-[#201744] border border-purple-500/25 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500">
+          <input type="text" id="editNameInput" required placeholder="Masalan: Adham Umarov" class="w-full h-11 px-3.5 rounded-xl bg-[#201744] border border-purple-500/25 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+          <p id="editNameErrorMsg" class="hidden text-[11px] text-rose-400 font-semibold mt-1.5 flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-exclamation text-xs"></i>
+            <span>Iltimos, ism va familiyangizni to'liq kiriting (Masalan: Adham Umarov)</span>
+          </p>
         </div>
         <div>
           <label class="block text-xs font-bold text-purple-200 mb-1">Foydalanuvchi nomi (@tag)</label>
